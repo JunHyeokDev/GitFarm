@@ -92,4 +92,5 @@ iOSInjectionProject/
 
 # myIgnore
 Config.swift
+*.xcscheme
 GitFarm.xcscheme
