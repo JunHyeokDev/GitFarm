@@ -4,5 +4,10 @@
 <dict>
 	<key>com.apple.security.app-sandbox</key>
 	<true/>
+	<key>com.apple.security.application-groups</key>
+	<array>
+		<string>group.com.Jun.GitFarm.FarmWidget</string>
+		<string>group.com.Jun.GitFarm.GitFarm-Widget</string>
+	</array>
 </dict>
 </plist>

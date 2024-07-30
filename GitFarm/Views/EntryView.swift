@@ -27,8 +27,9 @@ struct EntryView: View {
 //                    }
 //                }
                 VStack(alignment: .center, spacing: 5) {
-                    GitCommitHistoryView(viewModel: viewModel)
-                        .background(colorScheme == .dark ? Color.secondary.opacity(0.3) : Color.secondary.opacity(0.02)) // 배경색 추가
+//                    GitCommitHistoryView(viewModel: viewModel)
+                    GitCommitHistoryView(commitHistories: viewModel.commitHistories, user: viewModel.user, columns: 17)
+                    .background(colorScheme == .dark ? Color.secondary.opacity(0.3) : Color.secondary.opacity(0.02)) // 배경색 추가
                         .clipShape(RoundedRectangle(cornerRadius: 20)) // 둥글기 정도 조절
                 }
             }

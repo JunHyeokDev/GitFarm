@@ -9,43 +9,70 @@ import WidgetKit
 import SwiftUI
 
 struct Provider: AppIntentTimelineProvider {
-    func placeholder(in context: Context) -> SimpleEntry {
-        SimpleEntry(date: Date(), configuration: ConfigurationAppIntent())
+    func placeholder(in context: Context) -> GitFarmEntry {
+//        GitFarmEntry(date: Date(), configuration: ConfigurationAppIntent())
+        return GitFarmEntry.loading()
     }
 
-    func snapshot(for configuration: ConfigurationAppIntent, in context: Context) async -> SimpleEntry {
-        SimpleEntry(date: Date(), configuration: configuration)
+    func snapshot(for configuration: ConfigurationAppIntent, in context: Context) async -> GitFarmEntry {
+        let numColumns = configuration.numberOfColumns
+        let user = fetchUserInfo()
+        let histories = fetchCommitHistories()
+        
+        return GitFarmEntry(
+            date: Date(),
+            user: user,
+            commitHistories: histories,
+            configuration: configuration
+        )
     }
     
-    func timeline(for configuration: ConfigurationAppIntent, in context: Context) async -> Timeline<SimpleEntry> {
-        var entries: [SimpleEntry] = []
+    func timeline(for configuration: ConfigurationAppIntent, in context: Context) async -> Timeline<GitFarmEntry> {
+        var entries: [GitFarmEntry] = []
+        let currentDate = Date()
+        let user = fetchUserInfo()
+        let histories = fetchCommitHistories()
 
         // Generate a timeline consisting of five entries an hour apart, starting from the current date.
-        let currentDate = Date()
         for hourOffset in 0 ..< 5 {
             let entryDate = Calendar.current.date(byAdding: .hour, value: hourOffset, to: currentDate)!
-            let entry = SimpleEntry(date: entryDate, configuration: configuration)
+            let entry = GitFarmEntry(
+                date: entryDate,
+                user: user,
+                commitHistories: histories,
+                configuration: configuration
+            )
             entries.append(entry)
         }
 
         return Timeline(entries: entries, policy: .atEnd)
     }
+    
+    func fetchCommitHistories() -> [CommitHistory] {
+        if let data = UserDefaults(suiteName: "group.com.Jun.GitFarm.FarmWidget")?.data(forKey: "commitHistories"),
+           let decodedData = try? JSONDecoder().decode([CommitHistory].self, from: data) {
+            return decodedData
+        }
+        return []
+    }
+
+    func fetchUserInfo() -> User {
+        guard let data = UserDefaults(suiteName: "group.com.Jun.GitFarm.FarmWidget")?.data(forKey: "userInfoVM"),
+              let decodedData = try? JSONDecoder().decode(User.self, from: data) else {
+            return User.defaultUser
+        }
+        return decodedData
+    }
 }
 
-struct SimpleEntry: TimelineEntry {
+struct GitFarmEntry: TimelineEntry {
     let date: Date
+    let user: User?
+    let commitHistories: [CommitHistory]?
     let configuration: ConfigurationAppIntent
-}
-
-struct GitFarmWidgetEntryView : View {
-    var entry: Provider.Entry
-
-    var body: some View {
-        Text("Time:")
-        Text(entry.date, style: .time)
-
-        Text("Favorite Emoji:")
-        Text(entry.configuration.favoriteEmoji)
+    
+    static func loading() -> GitFarmEntry {
+        GitFarmEntry(date: Date(), user: nil, commitHistories: nil, configuration: ConfigurationAppIntent.defaultNumber)
     }
 }
 
@@ -61,22 +88,9 @@ struct GitFarmWidget: Widget {
 }
 
 extension ConfigurationAppIntent {
-    fileprivate static var smiley: ConfigurationAppIntent {
+    fileprivate static var defaultNumber: ConfigurationAppIntent {
         let intent = ConfigurationAppIntent()
-        intent.favoriteEmoji = "😀"
+        intent.numberOfColumns = 17
         return intent
     }
-    
-    fileprivate static var starEyes: ConfigurationAppIntent {
-        let intent = ConfigurationAppIntent()
-        intent.favoriteEmoji = "🤩"
-        return intent
-    }
-}
-
-#Preview(as: .systemSmall) {
-    GitFarmWidget()
-} timeline: {
-    SimpleEntry(date: .now, configuration: .smiley)
-    SimpleEntry(date: .now, configuration: .starEyes)
 }
