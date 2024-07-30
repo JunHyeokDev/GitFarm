@@ -10,9 +10,8 @@ import SwiftUI
 struct NavSplitView: View {
     
     @EnvironmentObject var commitHistoryViewModel: CommitHistoryViewModel
-    @State private var selectedCategory: Category? = .status // 기본값 설정
+    @State private var selectedCategory: Category? // 기본값 설정
 
-    
     var body: some View {
         NavigationSplitView {
             List(Category.allCases, selection: $selectedCategory) { category in
@@ -20,7 +19,7 @@ struct NavSplitView: View {
                     Text(category.title)
                 }
             }
-            .navigationTitle("Hello \(commitHistoryViewModel.login)! Welcome to GitFarm👩🏻‍🌾")
+            .navigationTitle("Hello \(commitHistoryViewModel.user?.name ?? "Anon")! ")
         } detail: {
             NavigationStack {
                 if let selectedCategory {
@@ -73,11 +72,9 @@ enum Category: String, CaseIterable, Identifiable {
     var items: [MyItem] {
         switch self {
         case .status:
-            return [MyItem(name: "Apple", description: "A sweet, edible fruit produced by an apple tree."),
-                    MyItem(name: "Banana", description: "A long curved fruit which grows in clusters and has soft pulpy flesh and yellow skin when ripe.")]
+            return [MyItem(name: "MyFarm", description: "A sweet, edible fruit produced by an apple tree.")]
         case .myFarm:
-            return [MyItem(name: "Carrot", description: "A tapering orange-colored root eaten as a vegetable."),
-                    MyItem(name: "Broccoli", description: "An edible green plant in the cabbage family.")]
+            return [MyItem(name: "Carrot", description: "A tapering orange-colored root eaten as a vegetable.")]
         }
     }
 }

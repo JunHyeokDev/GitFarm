@@ -144,6 +144,7 @@ class LoginManager: ObservableObject {
                 receiveCompletion: { completion in
                     if case .failure(let error) = completion {
                         print("Error: \(error.localizedDescription)")
+                        print("requestAccessTokenToGithub")
                     }
                 },
                 receiveValue: { [weak self] user in
@@ -154,7 +155,6 @@ class LoginManager: ObservableObject {
             )
             .store(in: &cancellables)
     }
-    
 }
 
 // MARK: - AccessTokenResponse

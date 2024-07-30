@@ -9,7 +9,5 @@
 		<string>group.com.Jun.GitFarm.FarmWidget</string>
 		<string>group.com.Jun.GitFarm.GitFarm-Widget</string>
 	</array>
-	<key>com.apple.security.files.user-selected.read-only</key>
-	<true/>
 </dict>
 </plist>

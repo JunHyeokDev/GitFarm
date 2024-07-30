@@ -30,10 +30,26 @@ struct GitCommitView<Content: View>: View {
         }
     }
     
+//    private func calculateCellSize() -> CGFloat {
+//        let availableWidth = max(size.width - CGFloat(columns - 1) * calculateSpacing(), 0)
+//        let availableHeight = max(size.height - CGFloat(rows - 1) * calculateSpacing() - 20, 0)
+//
+//        let cellWidth = availableWidth / CGFloat(columns)
+//        let cellHeight = availableHeight / CGFloat(rows)
+//        
+//        return max(min(cellWidth, cellHeight), 1) // Ensure the cell size is at least 1
+//    }
+    
     private func calculateCellSize() -> CGFloat {
-        let totalWidth = size.width - CGFloat(columns - 1) * 2
-        let totalHeight = size.height - CGFloat(rows - 1) * 2 - 20
-        return min(totalWidth / CGFloat(columns), totalHeight / CGFloat(rows))
+        let availableWidth = max(size.width - CGFloat(columns - 1) * calculateSpacing(), 0)
+
+        // 셀의 높이를 고정 값으로 설정 (예: 20)
+        let cellHeight: CGFloat = 20
+
+        let cellWidth = availableWidth / CGFloat(columns)
+
+        // 셀의 너비와 높이 중 작은 값을 사용하되, 최소값은 1로 설정
+        return max(min(cellWidth, cellHeight), 1)
     }
     
     private func calculateSpacing() -> CGFloat {

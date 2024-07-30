@@ -9,18 +9,16 @@ import SwiftUI
 
 @main
 struct GitFarmApp: App {
-    let persistenceController = PersistenceController.shared
-
-    @StateObject private var loginManager = LoginManager.shared
-
+    @StateObject private var appCoordinator = AppCoordinator()
+    
     var body: some Scene {
         WindowGroup {
             ContentView()
-                .environmentObject(loginManager)
+                .environmentObject(appCoordinator)
+                .environmentObject(appCoordinator.loginManager)
                 .onOpenURL { url in
-                    loginManager.handleCallback(url: url)
+                    appCoordinator.loginManager.handleCallback(url: url)
                 }
-                .environment(\.managedObjectContext, persistenceController.container.viewContext)
         }
         #if os(macOS)
         .defaultSize(width: 1000, height: 650)

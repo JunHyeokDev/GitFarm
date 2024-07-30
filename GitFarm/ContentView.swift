@@ -8,35 +8,35 @@
 import SwiftUI
 
 struct ContentView: View {
-    @StateObject private var initViewModel = AppInitViewModel()
-    @EnvironmentObject var loginManager: LoginManager
-    @StateObject private var commitHistoryViewModel = CommitHistoryViewModel(with: User.defaultUser)
+    @EnvironmentObject private var appCoordinator: AppCoordinator
     
     var body: some View {
-        Group {
-            if loginManager.isLoggedIn {
-                if initViewModel.isInitialized {
-                    NavSplitView()
-                        .environmentObject(commitHistoryViewModel)
-                } else {
-                    ProgressView("Loading data...")
+        ZStack {
+            Group {
+                switch appCoordinator.appState {
+                case .loading:
+                    LoadingView(message: "Setting up your Git farm...")
+                case .login:
+                    LoginView()
+                        .transition(.asymmetric(insertion: .move(edge: .bottom).combined(with: .opacity),
+                                                removal: .move(edge: .top).combined(with: .opacity)))
+                case .main:
+                    if let viewModel = appCoordinator.commitHistoryViewModel {
+                        NavSplitView()
+                            .environmentObject(viewModel)
+                            .transition(.asymmetric(insertion: .move(edge: .trailing).combined(with: .opacity),
+                                                    removal: .move(edge: .leading).combined(with: .opacity)))
+                    } else {
+                        LoadingView(message: "Preparing your data...")
+                    }
                 }
-            } else {
-                LoginView()
             }
+            .animation(.easeIn(duration: 0.2), value: appCoordinator.appState)
         }
         .onAppear {
-            initViewModel.initialize()
-        }
-        .onChange(of: loginManager.isLoggedIn) { newValue in
-            if newValue, let user = loginManager.currentUser {
-                commitHistoryViewModel.updateUser(user)
-                commitHistoryViewModel.fetchCommitHistories(with: user.login)
-            } else {
-                commitHistoryViewModel.reset()
+            if appCoordinator.appState == .loading {
+                appCoordinator.checkLoginStatus()
             }
-            initViewModel.initialize()
         }
     }
 }
-
