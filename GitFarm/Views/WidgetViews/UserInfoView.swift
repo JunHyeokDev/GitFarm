@@ -10,18 +10,24 @@ import SwiftUI
 // MARK: - UserInfoView
 struct UserInfoView: View {
     let user: User
+    let parentWidth: CGFloat
     @Environment(\.colorScheme) var colorScheme
+    
+    init(user: User, parentWidth: CGFloat) {
+        self.user = user
+        self.parentWidth = parentWidth
+    }
 
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
             UsernameView(username: user.login)
-            BioView(bio: user.bio ?? "I'm a git farmer!🧑🏻‍🌾👩🏻‍🌾")
+            BioView(bio: user.bio ?? String.defaultBio())
             LocationView(location: user.location ?? "No location yet!")
             FollowersView(followers: user.followers, following: user.following)
-            DevelopmentDateView(createdAt: user.createdAt)
         }
         .padding(.horizontal, 10)
         .padding(.vertical, 5)
+        .frame(width: parentWidth)
         .background(colorScheme == .dark ? Color.accentColor.opacity(0.1) : Color.accentColor.opacity(0.05)) // 배경색 추가
         .cornerRadius(20)
     }

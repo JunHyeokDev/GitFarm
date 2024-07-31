@@ -7,7 +7,8 @@
 
 import Foundation
 
-public struct User: Codable {
+public struct User: Codable, Identifiable {
+    public let id: Int
     public var login: String
     public var avatarUrl: String
     public var name: String?
@@ -22,6 +23,7 @@ public struct User: Codable {
 
 extension User {
     public static let defaultUser = User(
+        id: 0,
         login: "DefaultUser",
         avatarUrl: "",
         name: nil,

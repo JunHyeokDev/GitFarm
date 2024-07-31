@@ -46,6 +46,7 @@
 		BF5E27532C58AC78009E31C4 /* CommitHistoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF59EB6D2C53EEA000B3F51B /* CommitHistoryViewModel.swift */; };
 		BF5E27572C58C3B1009E31C4 /* SkyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF5E27562C58C3B1009E31C4 /* SkyView.swift */; };
 		BF5E27582C58C3B1009E31C4 /* SkyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF5E27562C58C3B1009E31C4 /* SkyView.swift */; };
+		BF63842F2C5A165D0025FBA8 /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF63842E2C5A165D0025FBA8 /* HeaderView.swift */; };
 		BF68BF482C561CDB00263F63 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF68BF472C561CDB00263F63 /* AppState.swift */; };
 		BF68BF4A2C562AB700263F63 /* AuthenticationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF68BF492C562AB700263F63 /* AuthenticationService.swift */; };
 		BF68BF4E2C56345D00263F63 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF68BF4D2C56345D00263F63 /* Config.swift */; };
@@ -60,6 +61,15 @@
 		BFC5631C2C529ABD00CE79CB /* GitFarmTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFC5631B2C529ABD00CE79CB /* GitFarmTests.swift */; };
 		BFC563262C529ABD00CE79CB /* GitFarmUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFC563252C529ABD00CE79CB /* GitFarmUITests.swift */; };
 		BFC563282C529ABD00CE79CB /* GitFarmUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFC563272C529ABD00CE79CB /* GitFarmUITestsLaunchTests.swift */; };
+		BFE082442C5A28F600FA1FE0 /* Sidebar.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFE082432C5A28F600FA1FE0 /* Sidebar.swift */; };
+		BFE082462C5A2CC200FA1FE0 /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFE082452C5A2CC200FA1FE0 /* DetailView.swift */; };
+		BFE082482C5A41DD00FA1FE0 /* ChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFE082472C5A41DD00FA1FE0 /* ChartView.swift */; };
+		BFE0824A2C5A50EF00FA1FE0 /* String+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFE082492C5A50EF00FA1FE0 /* String+Ext.swift */; };
+		BFE0824B2C5A50EF00FA1FE0 /* String+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFE082492C5A50EF00FA1FE0 /* String+Ext.swift */; };
+		BFE0824D2C5A561D00FA1FE0 /* FollowerListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFE0824C2C5A561D00FA1FE0 /* FollowerListView.swift */; };
+		BFE0824F2C5A568600FA1FE0 /* FollowerListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFE0824E2C5A568600FA1FE0 /* FollowerListViewModel.swift */; };
+		BFE082512C5A78AB00FA1FE0 /* Follower.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFE082502C5A78AB00FA1FE0 /* Follower.swift */; };
+		BFE082522C5A797600FA1FE0 /* Follower.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFE082502C5A78AB00FA1FE0 /* Follower.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -129,6 +139,7 @@
 		BF5E27312C5892B9009E31C4 /* GitFarmWidget.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = GitFarmWidget.entitlements; sourceTree = "<group>"; };
 		BF5E273C2C589456009E31C4 /* GitFarmWidgetEntryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitFarmWidgetEntryView.swift; sourceTree = "<group>"; };
 		BF5E27562C58C3B1009E31C4 /* SkyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkyView.swift; sourceTree = "<group>"; };
+		BF63842E2C5A165D0025FBA8 /* HeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
 		BF68BF472C561CDB00263F63 /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
 		BF68BF492C562AB700263F63 /* AuthenticationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationService.swift; sourceTree = "<group>"; };
 		BF68BF4D2C56345D00263F63 /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
@@ -147,6 +158,13 @@
 		BFC563212C529ABD00CE79CB /* GitFarmUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GitFarmUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		BFC563252C529ABD00CE79CB /* GitFarmUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitFarmUITests.swift; sourceTree = "<group>"; };
 		BFC563272C529ABD00CE79CB /* GitFarmUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitFarmUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		BFE082432C5A28F600FA1FE0 /* Sidebar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sidebar.swift; sourceTree = "<group>"; };
+		BFE082452C5A2CC200FA1FE0 /* DetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailView.swift; sourceTree = "<group>"; };
+		BFE082472C5A41DD00FA1FE0 /* ChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartView.swift; sourceTree = "<group>"; };
+		BFE082492C5A50EF00FA1FE0 /* String+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Ext.swift"; sourceTree = "<group>"; };
+		BFE0824C2C5A561D00FA1FE0 /* FollowerListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowerListView.swift; sourceTree = "<group>"; };
+		BFE0824E2C5A568600FA1FE0 /* FollowerListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowerListViewModel.swift; sourceTree = "<group>"; };
+		BFE082502C5A78AB00FA1FE0 /* Follower.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Follower.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -197,6 +215,7 @@
 			isa = PBXGroup;
 			children = (
 				BF0900FD2C52ABDE00F18975 /* User.swift */,
+				BFE082502C5A78AB00FA1FE0 /* Follower.swift */,
 				BF59EB6A2C53EB8600B3F51B /* CommitHistory.swift */,
 			);
 			path = Model;
@@ -208,6 +227,7 @@
 				BF59EB6D2C53EEA000B3F51B /* CommitHistoryViewModel.swift */,
 				BF59EB852C53F5B700B3F51B /* AppInitViewModel.swift */,
 				BF68BF512C56511200263F63 /* AppCoordinator.swift */,
+				BFE0824E2C5A568600FA1FE0 /* FollowerListViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -216,6 +236,7 @@
 			isa = PBXGroup;
 			children = (
 				BF59EB702C53EEC900B3F51B /* Array+Ext.swift */,
+				BFE082492C5A50EF00FA1FE0 /* String+Ext.swift */,
 				BF59EB812C53F25100B3F51B /* CGFloat+Ext.swift */,
 			);
 			path = Extension;
@@ -224,15 +245,14 @@
 		BF59EB722C53F13A00B3F51B /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				BFE082422C5A28DF00FA1FE0 /* AppView */,
+				BF6384302C5A1BA50025FBA8 /* WidgetViews */,
 				BF59EB732C53F15000B3F51B /* EntryView.swift */,
 				BF59EB832C53F2F300B3F51B /* LoginView.swift */,
 				BF68BF532C56519200263F63 /* LoadingView.swift */,
-				BF59EB752C53F17D00B3F51B /* GitCommitHistoryView.swift */,
-				BF5E27562C58C3B1009E31C4 /* SkyView.swift */,
-				BF59EB772C53F18B00B3F51B /* GitCommitView.swift */,
-				BF59EB7B2C53F1FC00B3F51B /* FenceView.swift */,
-				BF59EB7D2C53F21E00B3F51B /* UserInfoView.swift */,
-				BF59EB792C53F1AF00B3F51B /* GitCommitCellView.swift */,
+				BF63842E2C5A165D0025FBA8 /* HeaderView.swift */,
+				BF0900F72C529FE100F18975 /* NavSplitView.swift */,
+				BFC5630B2C529ABA00CE79CB /* ContentView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -266,6 +286,19 @@
 				BF5E273C2C589456009E31C4 /* GitFarmWidgetEntryView.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		BF6384302C5A1BA50025FBA8 /* WidgetViews */ = {
+			isa = PBXGroup;
+			children = (
+				BF59EB752C53F17D00B3F51B /* GitCommitHistoryView.swift */,
+				BF5E27562C58C3B1009E31C4 /* SkyView.swift */,
+				BF59EB772C53F18B00B3F51B /* GitCommitView.swift */,
+				BF59EB7B2C53F1FC00B3F51B /* FenceView.swift */,
+				BF59EB7D2C53F21E00B3F51B /* UserInfoView.swift */,
+				BF59EB792C53F1AF00B3F51B /* GitCommitCellView.swift */,
+			);
+			path = WidgetViews;
 			sourceTree = "<group>";
 		};
 		BFC562F82C529ABA00CE79CB = {
@@ -303,9 +336,7 @@
 				BF0900F92C52AB2C00F18975 /* Manager */,
 				BF59EB6F2C53EEB400B3F51B /* Extension */,
 				BF59EB722C53F13A00B3F51B /* Views */,
-				BFC5630B2C529ABA00CE79CB /* ContentView.swift */,
 				BFC563062C529ABA00CE79CB /* Persistence.swift */,
-				BF0900F72C529FE100F18975 /* NavSplitView.swift */,
 				BFC5630D2C529ABC00CE79CB /* Assets.xcassets */,
 				BFC5630F2C529ABC00CE79CB /* GitFarm.entitlements */,
 				BFC563082C529ABA00CE79CB /* GitFarm.xcdatamodeld */,
@@ -337,6 +368,17 @@
 				BFC563272C529ABD00CE79CB /* GitFarmUITestsLaunchTests.swift */,
 			);
 			path = GitFarmUITests;
+			sourceTree = "<group>";
+		};
+		BFE082422C5A28DF00FA1FE0 /* AppView */ = {
+			isa = PBXGroup;
+			children = (
+				BFE082432C5A28F600FA1FE0 /* Sidebar.swift */,
+				BFE082452C5A2CC200FA1FE0 /* DetailView.swift */,
+				BFE082472C5A41DD00FA1FE0 /* ChartView.swift */,
+				BFE0824C2C5A561D00FA1FE0 /* FollowerListView.swift */,
+			);
+			path = AppView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -501,6 +543,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BFE082522C5A797600FA1FE0 /* Follower.swift in Sources */,
+				BFE0824B2C5A50EF00FA1FE0 /* String+Ext.swift in Sources */,
 				BF5E27442C58A41F009E31C4 /* CGFloat+Ext.swift in Sources */,
 				BF5E27452C58A41F009E31C4 /* Array+Ext.swift in Sources */,
 				BF5E272B2C5892B8009E31C4 /* GitFarmWidget.swift in Sources */,
@@ -527,12 +571,14 @@
 			files = (
 				BF5E27572C58C3B1009E31C4 /* SkyView.swift in Sources */,
 				BF59EB6E2C53EEA000B3F51B /* CommitHistoryViewModel.swift in Sources */,
+				BFE0824F2C5A568600FA1FE0 /* FollowerListViewModel.swift in Sources */,
 				BF59EB762C53F17D00B3F51B /* GitCommitHistoryView.swift in Sources */,
 				BFC563052C529ABA00CE79CB /* GitFarmApp.swift in Sources */,
 				BFC5630A2C529ABA00CE79CB /* GitFarm.xcdatamodeld in Sources */,
 				BFC5630C2C529ABA00CE79CB /* ContentView.swift in Sources */,
 				BF0900F82C529FE100F18975 /* NavSplitView.swift in Sources */,
 				BF59EB862C53F5B700B3F51B /* AppInitViewModel.swift in Sources */,
+				BFE0824A2C5A50EF00FA1FE0 /* String+Ext.swift in Sources */,
 				BF59EB822C53F25100B3F51B /* CGFloat+Ext.swift in Sources */,
 				BF59EB7C2C53F1FC00B3F51B /* FenceView.swift in Sources */,
 				BF68BF482C561CDB00263F63 /* AppState.swift in Sources */,
@@ -540,16 +586,22 @@
 				BF59EB712C53EEC900B3F51B /* Array+Ext.swift in Sources */,
 				BF68BF522C56511200263F63 /* AppCoordinator.swift in Sources */,
 				BF59EB692C53EB5200B3F51B /* NetworkManager.swift in Sources */,
+				BFE082462C5A2CC200FA1FE0 /* DetailView.swift in Sources */,
 				BFC563072C529ABA00CE79CB /* Persistence.swift in Sources */,
+				BFE0824D2C5A561D00FA1FE0 /* FollowerListView.swift in Sources */,
 				BF59EB782C53F18B00B3F51B /* GitCommitView.swift in Sources */,
+				BFE082512C5A78AB00FA1FE0 /* Follower.swift in Sources */,
 				BF68BF4A2C562AB700263F63 /* AuthenticationService.swift in Sources */,
 				BF59EB7A2C53F1AF00B3F51B /* GitCommitCellView.swift in Sources */,
+				BF63842F2C5A165D0025FBA8 /* HeaderView.swift in Sources */,
 				BF68BF542C56519200263F63 /* LoadingView.swift in Sources */,
 				BF0900FB2C52AB4F00F18975 /* LoginManager.swift in Sources */,
+				BFE082482C5A41DD00FA1FE0 /* ChartView.swift in Sources */,
 				BF68BF4E2C56345D00263F63 /* Config.swift in Sources */,
 				BF0900FE2C52ABDE00F18975 /* User.swift in Sources */,
 				BF59EB842C53F2F300B3F51B /* LoginView.swift in Sources */,
 				BF59EB7E2C53F21E00B3F51B /* UserInfoView.swift in Sources */,
+				BFE082442C5A28F600FA1FE0 /* Sidebar.swift in Sources */,
 				BF59EB742C53F15000B3F51B /* EntryView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -19,6 +19,7 @@ struct SkyView: View {
                 .resizable()
                 .frame(width: 25, height: 25)
                 .zIndex(1)
+                .offset(y:5)
             
             // 왼쪽에 13개 구름 배치
             ForEach(0..<13, id: \.self) { index in
@@ -29,7 +30,7 @@ struct SkyView: View {
                         range: -207...0,
                         sunCenterX: sunCenterX,
                         safeRadius: safeRadius
-                    ), y: CGFloat.random(in: 0...25))
+                    ), y: CGFloat.random(in: 0...12.5))
             }
             
             // 오른쪽에 13개 구름 배치
@@ -41,12 +42,9 @@ struct SkyView: View {
                         range: 0...207,
                         sunCenterX: sunCenterX,
                         safeRadius: safeRadius
-                    ), y: CGFloat.random(in: 0...25))
+                    ), y: CGFloat.random(in: 0...12.5))
             }
         }
-        .offset(y:-10)    }
-}
-
-#Preview {
-    SkyView()
+        .offset(y:-10)
+    }
 }

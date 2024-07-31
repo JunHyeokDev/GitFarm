@@ -15,7 +15,6 @@ struct Provider: AppIntentTimelineProvider {
     }
 
     func snapshot(for configuration: ConfigurationAppIntent, in context: Context) async -> GitFarmEntry {
-        let numColumns = configuration.numberOfColumns
         let user = fetchUserInfo()
         let histories = fetchCommitHistories()
         

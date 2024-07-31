@@ -15,8 +15,10 @@ struct GitFarmWidgetEntryView : View {
     var body: some View {
         if let user = entry.user, let commitHistories = entry.commitHistories {
             switch widgetFamily {
+            case.systemSmall:
+                GitCommitHistoryView2(commitHistories: entry.commitHistories, user: user, columns: entry.configuration.numberOfColumns)
             case .systemMedium:
-                GitCommitHistoryView(commitHistories: entry.commitHistories, user: user, columns: entry.configuration.numberOfColumns)
+                GitCommitHistoryView2(commitHistories: entry.commitHistories, user: user, columns: entry.configuration.numberOfColumns)
             case .systemLarge:
                 GitCommitHistoryView(commitHistories: entry.commitHistories, user: user, columns: entry.configuration.numberOfColumns)
             case .accessoryRectangular:
