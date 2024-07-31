@@ -10,21 +10,17 @@ import SwiftUI
 struct NavSplitView: View {
     
     @EnvironmentObject var commitHistoryViewModel: CommitHistoryViewModel
-    @State private var selectedCategory: Category? // 기본값 설정
+    //@State private var selectedCategory: Category? // 기본값 설정
+    @State private var selection: Panel? = Panel.myFarm
+    @State private var path = NavigationPath()
+
 
     var body: some View {
         NavigationSplitView {
-            List(Category.allCases, selection: $selectedCategory) { category in
-                NavigationLink(value: category) {
-                    Text(category.title)
-                }
-            }
-            .navigationTitle("Hello \(commitHistoryViewModel.user?.name ?? "Anon")! ")
+            Sidebar(selection: $selection)
         } detail: {
-            NavigationStack {
-                if let selectedCategory {
-                    CategoryDetailView(commitHistoryViewModel: commitHistoryViewModel, category: selectedCategory)
-                }
+            NavigationStack(path: $path) {
+                DetailView(selection: $selection, commitHistoryViewModel: commitHistoryViewModel)
             }
         }
     }

@@ -87,9 +87,7 @@ class CommitHistoryViewModel: ObservableObject {
         }
 
         let rows = 7
-        let columns = 17
-
-        let cellCount = rows * columns - (rows - Calendar.current.component(.weekday, from: lastDate)) // Provide default value for lastDate
+        let cellCount = rows * columnsCount - (rows - Calendar.current.component(.weekday, from: lastDate)) // Provide default value for lastDate
 
         let dividedCommitHistories = commitHistories.suffix(cellCount).slice(into: rows)
         var result: [[CommitHistory]] = []
