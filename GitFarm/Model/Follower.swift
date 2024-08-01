@@ -8,7 +8,7 @@
 import Foundation
 
 // MARK: - Followers
-struct Follower : Decodable , Identifiable {
+struct Follower : Decodable , Identifiable, Equatable {
     let login: String?
     let id: Int?
     let nodeID: String?

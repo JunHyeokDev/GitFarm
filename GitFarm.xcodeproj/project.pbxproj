@@ -46,12 +46,15 @@
 		BF5E27532C58AC78009E31C4 /* CommitHistoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF59EB6D2C53EEA000B3F51B /* CommitHistoryViewModel.swift */; };
 		BF5E27572C58C3B1009E31C4 /* SkyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF5E27562C58C3B1009E31C4 /* SkyView.swift */; };
 		BF5E27582C58C3B1009E31C4 /* SkyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF5E27562C58C3B1009E31C4 /* SkyView.swift */; };
+		BF6209012C5B9C5B007ED93D /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF6209002C5B9C5A007ED93D /* SearchBar.swift */; };
 		BF63842F2C5A165D0025FBA8 /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF63842E2C5A165D0025FBA8 /* HeaderView.swift */; };
 		BF68BF482C561CDB00263F63 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF68BF472C561CDB00263F63 /* AppState.swift */; };
 		BF68BF4A2C562AB700263F63 /* AuthenticationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF68BF492C562AB700263F63 /* AuthenticationService.swift */; };
 		BF68BF4E2C56345D00263F63 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF68BF4D2C56345D00263F63 /* Config.swift */; };
 		BF68BF522C56511200263F63 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF68BF512C56511200263F63 /* AppCoordinator.swift */; };
 		BF68BF542C56519200263F63 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF68BF532C56519200263F63 /* LoadingView.swift */; };
+		BF8B57232C5BA708009FE90F /* FollowerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8B57222C5BA708009FE90F /* FollowerView.swift */; };
+		BF8B57252C5BC830009FE90F /* FollowerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8B57242C5BC830009FE90F /* FollowerViewModel.swift */; };
 		BFC563052C529ABA00CE79CB /* GitFarmApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFC563042C529ABA00CE79CB /* GitFarmApp.swift */; };
 		BFC563072C529ABA00CE79CB /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFC563062C529ABA00CE79CB /* Persistence.swift */; };
 		BFC5630A2C529ABA00CE79CB /* GitFarm.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = BFC563082C529ABA00CE79CB /* GitFarm.xcdatamodeld */; };
@@ -139,12 +142,15 @@
 		BF5E27312C5892B9009E31C4 /* GitFarmWidget.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = GitFarmWidget.entitlements; sourceTree = "<group>"; };
 		BF5E273C2C589456009E31C4 /* GitFarmWidgetEntryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitFarmWidgetEntryView.swift; sourceTree = "<group>"; };
 		BF5E27562C58C3B1009E31C4 /* SkyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkyView.swift; sourceTree = "<group>"; };
+		BF6209002C5B9C5A007ED93D /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
 		BF63842E2C5A165D0025FBA8 /* HeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
 		BF68BF472C561CDB00263F63 /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
 		BF68BF492C562AB700263F63 /* AuthenticationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationService.swift; sourceTree = "<group>"; };
 		BF68BF4D2C56345D00263F63 /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
 		BF68BF512C56511200263F63 /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
 		BF68BF532C56519200263F63 /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
+		BF8B57222C5BA708009FE90F /* FollowerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowerView.swift; sourceTree = "<group>"; };
+		BF8B57242C5BC830009FE90F /* FollowerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowerViewModel.swift; sourceTree = "<group>"; };
 		BFC563012C529ABA00CE79CB /* GitFarm.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GitFarm.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BFC563042C529ABA00CE79CB /* GitFarmApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitFarmApp.swift; sourceTree = "<group>"; };
 		BFC563062C529ABA00CE79CB /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
@@ -226,6 +232,7 @@
 			children = (
 				BF59EB6D2C53EEA000B3F51B /* CommitHistoryViewModel.swift */,
 				BF59EB852C53F5B700B3F51B /* AppInitViewModel.swift */,
+				BF8B57242C5BC830009FE90F /* FollowerViewModel.swift */,
 				BF68BF512C56511200263F63 /* AppCoordinator.swift */,
 				BFE0824E2C5A568600FA1FE0 /* FollowerListViewModel.swift */,
 			);
@@ -374,9 +381,11 @@
 			isa = PBXGroup;
 			children = (
 				BFE082432C5A28F600FA1FE0 /* Sidebar.swift */,
+				BF6209002C5B9C5A007ED93D /* SearchBar.swift */,
 				BFE082452C5A2CC200FA1FE0 /* DetailView.swift */,
 				BFE082472C5A41DD00FA1FE0 /* ChartView.swift */,
 				BFE0824C2C5A561D00FA1FE0 /* FollowerListView.swift */,
+				BF8B57222C5BA708009FE90F /* FollowerView.swift */,
 			);
 			path = AppView;
 			sourceTree = "<group>";
@@ -576,6 +585,7 @@
 				BFC563052C529ABA00CE79CB /* GitFarmApp.swift in Sources */,
 				BFC5630A2C529ABA00CE79CB /* GitFarm.xcdatamodeld in Sources */,
 				BFC5630C2C529ABA00CE79CB /* ContentView.swift in Sources */,
+				BF6209012C5B9C5B007ED93D /* SearchBar.swift in Sources */,
 				BF0900F82C529FE100F18975 /* NavSplitView.swift in Sources */,
 				BF59EB862C53F5B700B3F51B /* AppInitViewModel.swift in Sources */,
 				BFE0824A2C5A50EF00FA1FE0 /* String+Ext.swift in Sources */,
@@ -596,8 +606,10 @@
 				BF63842F2C5A165D0025FBA8 /* HeaderView.swift in Sources */,
 				BF68BF542C56519200263F63 /* LoadingView.swift in Sources */,
 				BF0900FB2C52AB4F00F18975 /* LoginManager.swift in Sources */,
+				BF8B57252C5BC830009FE90F /* FollowerViewModel.swift in Sources */,
 				BFE082482C5A41DD00FA1FE0 /* ChartView.swift in Sources */,
 				BF68BF4E2C56345D00263F63 /* Config.swift in Sources */,
+				BF8B57232C5BA708009FE90F /* FollowerView.swift in Sources */,
 				BF0900FE2C52ABDE00F18975 /* User.swift in Sources */,
 				BF59EB842C53F2F300B3F51B /* LoginView.swift in Sources */,
 				BF59EB7E2C53F21E00B3F51B /* UserInfoView.swift in Sources */,

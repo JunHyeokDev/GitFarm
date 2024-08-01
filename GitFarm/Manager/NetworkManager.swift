@@ -103,6 +103,10 @@ class NetworkManager {
     
     func getUserInfo(with username: String) -> AnyPublisher<User, NetworkError> {
         let endpoint = _baseURL + "/users/\(username)"
+        let decoder = JSONDecoder()
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
+        decoder.dateDecodingStrategy = .iso8601 // Standard!
+
         
         guard let url = URL(string: endpoint) else {
             return Fail(error: NetworkError.invalidURL).eraseToAnyPublisher()
@@ -115,9 +119,11 @@ class NetworkManager {
                 }
                 return data
             }
-            .decode(type: User.self, decoder: JSONDecoder()) // User 디코딩
+            .decode(type: User.self, decoder: decoder) // User 디코딩
             .mapError { error in
                 if error is DecodingError {
+                    print(error)
+                    print(error.localizedDescription)
                     return NetworkError.jsonConvertError
                 } else {
                     return NetworkError.defaultError
@@ -147,6 +153,7 @@ class NetworkManager {
             .decode(type: [Follower].self, decoder: decoder)
             .mapError { error in
                 if error is DecodingError {
+                    print(error.localizedDescription)
                     return NetworkError.jsonConvertError
                 } else {
                     return NetworkError.defaultError
