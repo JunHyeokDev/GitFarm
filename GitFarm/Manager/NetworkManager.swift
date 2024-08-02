@@ -95,6 +95,7 @@ class NetworkManager {
                 if let error = error as? NetworkError {
                     return error
                 } else {
+                    print("fetchCommitHistories fail")
                     return NetworkError.defaultError
                 }
             }
@@ -126,6 +127,7 @@ class NetworkManager {
                     print(error.localizedDescription)
                     return NetworkError.jsonConvertError
                 } else {
+                    print("getUserInfo fail")
                     return NetworkError.defaultError
                 }
             }
@@ -156,6 +158,8 @@ class NetworkManager {
                     print(error.localizedDescription)
                     return NetworkError.jsonConvertError
                 } else {
+                    print(error)
+                    print("getFollowers fail")
                     return NetworkError.defaultError
                 }
             }
@@ -204,5 +208,24 @@ extension NetworkManager {
         static let scheme = "https"
         static let host = "github.com"
         static let path = "/users"
+    }
+}
+
+// MARK: - getRepositories & getCommits
+extension NetworkManager {
+    func getRepositories(for username: String) -> AnyPublisher<[Repository], Error> {
+        let endpoint = "https://api.github.com/users/\(username)/repos"
+        return URLSession.shared.dataTaskPublisher(for: URL(string: endpoint)!)
+            .map(\.data)
+            .decode(type: [Repository].self, decoder: JSONDecoder())
+            .eraseToAnyPublisher()
+    }
+    
+    func getCommits(for repo: String, owner: String) -> AnyPublisher<[Commit], Error> {
+        let endpoint = "https://api.github.com/repos/\(owner)/\(repo)/commits"
+        return URLSession.shared.dataTaskPublisher(for: URL(string: endpoint)!)
+            .map(\.data)
+            .decode(type: [Commit].self, decoder: JSONDecoder())
+            .eraseToAnyPublisher()
     }
 }
