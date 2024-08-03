@@ -9,16 +9,17 @@ import Foundation
 
 public struct User: Codable, Identifiable {
     public let id: Int
-    public var login: String
-    public var avatarUrl: String
-    public var name: String?
-    public var location: String?
-    public var bio: String?
-    public var publicRepos: Int
-    public var publicGists: Int
-    public var following: Int
-    public var followers: Int
-    public var createdAt: Date
+    let login: String
+    let avatarUrl: String
+    let name: String?
+    let location: String?
+    let bio: String?
+    let publicRepos: Int
+    let publicGists: Int
+    let htmlUrl: String
+    var following: Int
+    var followers: Int
+    let createdAt: Date
 }
 
 extension User {
@@ -31,6 +32,7 @@ extension User {
         bio: nil,
         publicRepos: 0,
         publicGists: 0,
+        htmlUrl: "",
         following: 0,
         followers: 0,
         createdAt: Date()
