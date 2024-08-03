@@ -55,6 +55,9 @@
 		BF68BF542C56519200263F63 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF68BF532C56519200263F63 /* LoadingView.swift */; };
 		BF6CFB0C2C5CAF8500EE06C4 /* Repository.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF6CFB0B2C5CAF8500EE06C4 /* Repository.swift */; };
 		BF6CFB0D2C5CAFD900EE06C4 /* Repository.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF6CFB0B2C5CAF8500EE06C4 /* Repository.swift */; };
+		BF6CFB0E2C5CBDED00EE06C4 /* FollowerListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFE0824E2C5A568600FA1FE0 /* FollowerListViewModel.swift */; };
+		BF6CFB0F2C5CBDF100EE06C4 /* FollowerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8B57242C5BC830009FE90F /* FollowerViewModel.swift */; };
+		BF6CFB112C5CC57500EE06C4 /* CommitStatisticsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF6CFB102C5CC57500EE06C4 /* CommitStatisticsView.swift */; };
 		BF8B57232C5BA708009FE90F /* FollowerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8B57222C5BA708009FE90F /* FollowerView.swift */; };
 		BF8B57252C5BC830009FE90F /* FollowerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8B57242C5BC830009FE90F /* FollowerViewModel.swift */; };
 		BFC563052C529ABA00CE79CB /* GitFarmApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFC563042C529ABA00CE79CB /* GitFarmApp.swift */; };
@@ -152,6 +155,7 @@
 		BF68BF512C56511200263F63 /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
 		BF68BF532C56519200263F63 /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
 		BF6CFB0B2C5CAF8500EE06C4 /* Repository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Repository.swift; sourceTree = "<group>"; };
+		BF6CFB102C5CC57500EE06C4 /* CommitStatisticsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommitStatisticsView.swift; sourceTree = "<group>"; };
 		BF8B57222C5BA708009FE90F /* FollowerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowerView.swift; sourceTree = "<group>"; };
 		BF8B57242C5BC830009FE90F /* FollowerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowerViewModel.swift; sourceTree = "<group>"; };
 		BFC563012C529ABA00CE79CB /* GitFarm.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GitFarm.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -387,6 +391,7 @@
 				BFE082432C5A28F600FA1FE0 /* Sidebar.swift */,
 				BF6209002C5B9C5A007ED93D /* SearchBar.swift */,
 				BFE082452C5A2CC200FA1FE0 /* DetailView.swift */,
+				BF6CFB102C5CC57500EE06C4 /* CommitStatisticsView.swift */,
 				BFE082472C5A41DD00FA1FE0 /* ChartView.swift */,
 				BFE0824C2C5A561D00FA1FE0 /* FollowerListView.swift */,
 				BF8B57222C5BA708009FE90F /* FollowerView.swift */,
@@ -561,6 +566,7 @@
 				BF5E27442C58A41F009E31C4 /* CGFloat+Ext.swift in Sources */,
 				BF5E27452C58A41F009E31C4 /* Array+Ext.swift in Sources */,
 				BF5E272B2C5892B8009E31C4 /* GitFarmWidget.swift in Sources */,
+				BF6CFB0E2C5CBDED00EE06C4 /* FollowerListViewModel.swift in Sources */,
 				BF5E273F2C58A1CE009E31C4 /* CommitHistory.swift in Sources */,
 				BF5E27492C58AA16009E31C4 /* FenceView.swift in Sources */,
 				BF6CFB0D2C5CAFD900EE06C4 /* Repository.swift in Sources */,
@@ -569,6 +575,7 @@
 				BF5E274B2C58AA16009E31C4 /* GitCommitCellView.swift in Sources */,
 				BF5E274D2C58AA16009E31C4 /* GitCommitView.swift in Sources */,
 				BF5E27292C5892B8009E31C4 /* GitFarmWidgetBundle.swift in Sources */,
+				BF6CFB0F2C5CBDF100EE06C4 /* FollowerViewModel.swift in Sources */,
 				BF5E27462C58A6AD009E31C4 /* Config.swift in Sources */,
 				BF5E273D2C589456009E31C4 /* GitFarmWidgetEntryView.swift in Sources */,
 				BF5E274F2C58AB7C009E31C4 /* GitCommitHistoryView.swift in Sources */,
@@ -599,6 +606,7 @@
 				BF59EB7C2C53F1FC00B3F51B /* FenceView.swift in Sources */,
 				BF68BF482C561CDB00263F63 /* AppState.swift in Sources */,
 				BF59EB6B2C53EB8600B3F51B /* CommitHistory.swift in Sources */,
+				BF6CFB112C5CC57500EE06C4 /* CommitStatisticsView.swift in Sources */,
 				BF59EB712C53EEC900B3F51B /* Array+Ext.swift in Sources */,
 				BF68BF522C56511200263F63 /* AppCoordinator.swift in Sources */,
 				BF59EB692C53EB5200B3F51B /* NetworkManager.swift in Sources */,

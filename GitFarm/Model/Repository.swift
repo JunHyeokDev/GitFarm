@@ -30,4 +30,5 @@ struct CommitTimeStatistics {
     var afternoon: Int = 0 // 12:00 - 17:59
     var evening: Int = 0   // 18:00 - 23:59
     var night: Int = 0     // 00:00 - 5:59
+    var totalCommits: Int = 0
 }

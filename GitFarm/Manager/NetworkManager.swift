@@ -11,7 +11,7 @@ import Foundation
 enum NetworkError: String, Error {
     case invalidUsername = "This username created an invalid request. Please try again"
     case unableToComplete = "Unable to complete your request. Please Check your internet connection"
-    case invalidReponse = "Invalid response from the server. Please try again."
+    case invalidResponse = "Invalid response from the server. Please try again."
     case invalidData  = "The data received from the server was invaild. Please try again."
     case invalidURL = "URL is invalid"
     case jsonConvertError = "Something went wrong during converting JSON"
@@ -106,21 +106,23 @@ class NetworkManager {
         let endpoint = _baseURL + "/users/\(username)"
         let decoder = JSONDecoder()
         decoder.keyDecodingStrategy = .convertFromSnakeCase
-        decoder.dateDecodingStrategy = .iso8601 // Standard!
+        decoder.dateDecodingStrategy = .iso8601
 
-        
         guard let url = URL(string: endpoint) else {
             return Fail(error: NetworkError.invalidURL).eraseToAnyPublisher()
         }
-        
-        return URLSession.shared.dataTaskPublisher(for: url)
+
+        var request = URLRequest(url: url)
+        request.setValue("Bearer \(Config.GHtoken)", forHTTPHeaderField: "Authorization")
+
+        return URLSession.shared.dataTaskPublisher(for: request)
             .tryMap { data, response in
                 guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
-                    throw NetworkError.invalidReponse
+                    throw NetworkError.invalidResponse
                 }
                 return data
             }
-            .decode(type: User.self, decoder: decoder) // User 디코딩
+            .decode(type: User.self, decoder: decoder)
             .mapError { error in
                 if error is DecodingError {
                     print(error)
@@ -131,7 +133,7 @@ class NetworkManager {
                     return NetworkError.defaultError
                 }
             }
-            .receive(on: DispatchQueue.main) // 메인 스레드에서 결과 처리
+            .receive(on: DispatchQueue.main)
             .eraseToAnyPublisher()
     }
     
@@ -143,15 +145,17 @@ class NetworkManager {
         guard let url = URL(string: endpoint) else {
             return Fail(error: NetworkError.invalidURL).eraseToAnyPublisher()
         }
-        
-        return URLSession.shared.dataTaskPublisher(for: url)
+
+        var request = URLRequest(url: url)
+        request.setValue("Bearer \(Config.GHtoken)", forHTTPHeaderField: "Authorization")
+
+        return URLSession.shared.dataTaskPublisher(for: request)
             .tryMap { data, response in
                 guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
-                    throw NetworkError.invalidReponse
+                    throw NetworkError.invalidResponse
                 }
                 return data
             }
-        
             .decode(type: [Follower].self, decoder: decoder)
             .mapError { error in
                 if error is DecodingError {
@@ -167,40 +171,6 @@ class NetworkManager {
             .eraseToAnyPublisher()
     }
     
-//    func getFollowers(for username:String, page: Int, completed: @escaping(Result<[User],NetworkError>) -> Void ) {
-//        let endpoint = _baseURL + "/users/\(username)/followers?per_page=\(_followersPerPage)&page=\(page)"
-//        
-//        guard let url = URL(string: endpoint) else {
-//            completed(.failure(.invalidURL))
-//            return
-//        }
-//        
-//        let task = URLSession.shared.dataTask(with: url) { data, response, error in
-//            if let _ = error { completed(.failure(.unableToComplete)) }
-//            
-//            guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
-//                completed(.failure(.invalidReponse))
-//                return
-//            }
-//            
-//            guard let data = data else {
-//                completed(.failure(.invalidData))
-//                return
-//            }
-//            
-//            do {
-//                let decoder = JSONDecoder()
-//                decoder.keyDecodingStrategy = .convertFromSnakeCase
-//                let followers = try decoder.decode([User].self, from: data) // [Follower].self ??
-//                completed(.success(followers)) // Good to go
-//            } catch {
-//                //completed(nil,error.localizedDescription) // It's good for debug, but not for user!
-//                completed(.failure(.invalidData))
-//            }
-//        }
-//        task.resume() // This is what really makes the netwroking job
-//    }
-    
 }
 
 extension NetworkManager {
@@ -215,17 +185,48 @@ extension NetworkManager {
 extension NetworkManager {
     func getRepositories(for username: String) -> AnyPublisher<[Repository], Error> {
         let endpoint = "https://api.github.com/users/\(username)/repos"
-        return URLSession.shared.dataTaskPublisher(for: URL(string: endpoint)!)
+        guard let url = URL(string: endpoint) else {
+            return Fail(error: NetworkError.invalidURL).eraseToAnyPublisher()
+        }
+        
+        var request = URLRequest(url: url)
+        request.setValue("Bearer \(Config.GHtoken)", forHTTPHeaderField: "Authorization")
+        
+        return URLSession.shared.dataTaskPublisher(for: request)
             .map(\.data)
             .decode(type: [Repository].self, decoder: JSONDecoder())
             .eraseToAnyPublisher()
     }
     
     func getCommits(for repo: String, owner: String) -> AnyPublisher<[Commit], Error> {
-        let endpoint = "https://api.github.com/repos/\(owner)/\(repo)/commits"
-        return URLSession.shared.dataTaskPublisher(for: URL(string: endpoint)!)
-            .map(\.data)
+        let endpoint = "https://api.github.com/repos/\(owner)/\(repo)/commits?per_page=100"
+        guard let url = URL(string: endpoint) else {
+            return Fail(error: NetworkError.invalidURL).eraseToAnyPublisher()
+        }
+        
+        var request = URLRequest(url: url)
+        request.setValue("Bearer \(Config.GHtoken)", forHTTPHeaderField: "Authorization")
+        
+        return URLSession.shared.dataTaskPublisher(for: request)
+            .tryMap { data, response -> Data in
+                guard let httpResponse = response as? HTTPURLResponse else {
+                    throw NetworkError.invalidResponse
+                }
+                
+                switch httpResponse.statusCode {
+                case 200...299:
+                    return data
+                case 409:
+                    print("Repository \(repo) is empty or inaccessible")
+                    return "[]".data(using: .utf8) ?? Data()
+                default:
+                    throw NetworkError.invalidResponse
+                }
+            }
             .decode(type: [Commit].self, decoder: JSONDecoder())
+            .catch { error -> AnyPublisher<[Commit], Error> in
+                print("Error for \(repo): \(error)")
+                return Just([]).setFailureType(to: Error.self).eraseToAnyPublisher()
+            }
             .eraseToAnyPublisher()
-    }
-}
+    }}

@@ -45,6 +45,8 @@ class FollowerViewModel: ObservableObject {
                     NetworkManager.shared.getCommits(for: repo.name, owner: username)
                 }
                 return Publishers.MergeMany(commitPublishers)
+                    .collect()
+                    .map { $0.flatMap { $0 } }
                     .eraseToAnyPublisher()
             }
             .receive(on: DispatchQueue.main)
@@ -53,14 +55,18 @@ class FollowerViewModel: ObservableObject {
                 case .finished:
                     break
                 case .failure(let error):
-                    self.errorMessage = error.localizedDescription
+                    print("Error: \(error)")
+                    self.errorMessage = "Some repositories couldn't be accessed. Results may be incomplete."
                 }
             } receiveValue: { commits in
-                self.analyzeCommits(commits)
+                if commits.isEmpty {
+                    self.errorMessage = "No commits found or all repositories are empty."
+                } else {
+                    self.analyzeCommits(commits)
+                }
             }
             .store(in: &cancellables)
     }
-    
     private func analyzeCommits(_ commits: [Commit]) {
         self.totalCommits = commits.count
         
@@ -84,6 +90,7 @@ class FollowerViewModel: ObservableObject {
             }
         }
         
+        stats.totalCommits = self.totalCommits
         self.commitStats = stats
     }
 }

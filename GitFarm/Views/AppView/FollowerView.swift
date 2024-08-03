@@ -104,18 +104,12 @@ struct FollowerView: View {
                     .cornerRadius(15)
                     
                     if let stats = viewModel.commitStats {
-                        VStack(alignment: .leading, spacing: 10) {
-                            Text("Commit Statistics")
-                                .font(.headline)
-                            Text("Total Commits: \(viewModel.totalCommits)")
-                            Text("Morning (6AM-12PM): \(stats.morning)")
-                            Text("Afternoon (12PM-6PM): \(stats.afternoon)")
-                            Text("Evening (6PM-12AM): \(stats.evening)")
-                            Text("Night (12AM-6AM): \(stats.night)")
-                        }
-                        .padding()
-                        .background(Color.secondary.opacity(0.1))
-                        .cornerRadius(10)
+                        CommitStatisticsView(stats: [
+                            ("🐥","Early Bird", stats.morning,Double(stats.morning)/Double(stats.totalCommits)),
+                            ("🧑‍💻","Working hours", stats.afternoon,Double(stats.afternoon)/Double(stats.totalCommits)),
+                            ("🌙","Over work", stats.evening,Double(stats.evening)/Double(stats.totalCommits)),
+                            ("🧟","Coding Zombie", stats.night,Double(stats.night)/Double(stats.totalCommits)),
+                        ])
                     }
                     
                 } else {
@@ -143,5 +137,3 @@ struct FollowerView: View {
         }
     }
 }
-
-// 43 83 166 12
