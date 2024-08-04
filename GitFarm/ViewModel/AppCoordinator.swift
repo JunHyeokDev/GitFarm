@@ -10,6 +10,7 @@ import Combine
 
 class AppCoordinator: ObservableObject {
     @Published var appState: AppState = .loading
+    @Published var userDataViewModel: UserDataViewModel?
     @Published var commitHistoryViewModel: CommitHistoryViewModel?
     
     let loginManager: LoginManager
@@ -34,16 +35,8 @@ class AppCoordinator: ObservableObject {
                     self?.fetchUserData()
                 } else {
                     self?.appState = .login
+                    self?.userDataViewModel = nil
                     self?.commitHistoryViewModel = nil
-                }
-            }
-            .store(in: &cancellables)
-        
-        loginManager.$currentUser
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] user in
-                if let user = user {
-                    self?.fetchUserData()
                 }
             }
             .store(in: &cancellables)
@@ -54,24 +47,38 @@ class AppCoordinator: ObservableObject {
     }
     
     private func fetchUserData() {
-        guard let user = loginManager.currentUser else {
-            appState = .login
-            return
-        }
-        
-        appState = .loading  // Set state to loading while fetching data
-        
-        let viewModel = CommitHistoryViewModel(with: user)
-        viewModel.fetchCommitHistories(with: user.login)
-        
-        viewModel.$commitHistories
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] histories in
-                if !histories.isEmpty {
-                    self?.commitHistoryViewModel = viewModel
-                    self?.appState = .main
-                }
-            }
-            .store(in: &cancellables)
-    }
+         guard let user = loginManager.currentUser else {
+             appState = .login
+             return
+         }
+         
+         appState = .loading
+         
+         let userDataVM = UserDataViewModel()
+         self.userDataViewModel = userDataVM
+         
+         let commitHistoryVM = CommitHistoryViewModel(with: user)
+         self.commitHistoryViewModel = commitHistoryVM
+         
+         userDataVM.loadUserData(username: user.login)
+         commitHistoryVM.fetchCommitHistories(with: user.login)
+         
+         Publishers.CombineLatest4(
+             userDataVM.$isLoading,
+             userDataVM.$error,
+             userDataVM.$commitStats,
+             commitHistoryVM.$commitHistories
+         )
+         .filter { !$0 && $1 == nil && $2 != nil && !$3.isEmpty }
+         .first()  // 조건을 만족하는 첫 번째 이벤트만 처리
+         .receive(on: DispatchQueue.main)
+         .sink { [weak self] _, _, commitStats, _ in
+             if let userDefaults = UserDefaults(suiteName: "group.com.Jun.GitFarm.FarmWidget")  {
+                 let encodedData = try? JSONEncoder().encode(commitStats)
+                 userDefaults.set(encodedData, forKey: "commitTimeline")
+             }
+             self?.appState = .main
+         }
+         .store(in: &cancellables)
+     }
 }

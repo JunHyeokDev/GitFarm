@@ -8,15 +8,18 @@
 import SwiftUI
 
 struct EntryView: View {
-    @ObservedObject var viewModel: CommitHistoryViewModel
+    @ObservedObject var commitHistoryViewModel: CommitHistoryViewModel
+    @ObservedObject var userDataViewModel : UserDataViewModel
     @Environment(\.colorScheme) var colorScheme
     
     var body: some View {
         VStack(alignment: .center, spacing: 5) {
+            
             Text("Welcome to GitFarm! 👩🏻‍🌾")
+                .foregroundStyle(Color.accent)
                 .font(.system(size: 24, weight: .bold))
             VStack(alignment: .center) {
-                GitCommitHistoryView(commitHistories: viewModel.commitHistories, user: viewModel.user, columns: 17)
+                GitCommitHistoryView(commitHistories: commitHistoryViewModel.commitHistories, user: commitHistoryViewModel.user, columns: 17, commitTimeStatistics: userDataViewModel.commitStats ?? CommitTimeStatistics.defaultsInfo())
                     .background(colorScheme == .dark ? Color.secondary.opacity(0.3) : Color.secondary.opacity(0.1)) // 배경색 추가
                     .clipShape(RoundedRectangle(cornerRadius: 20)) // 둥글기 정도 조절
             }

@@ -22,6 +22,9 @@ enum NetworkError: String, Error {
 
 class NetworkManager {
     static let shared = NetworkManager()
+    
+    private let cache = NSCache<NSString, AnyObject>()
+    
     private init() {}
     
     private let baseURL = "https://api.github.com/graphql"
@@ -29,12 +32,12 @@ class NetworkManager {
     private let _baseURL = "https://api.github.com"
     private let _followersPerPage = "100"
     
-    func fetchCommitHistories(with username: String) -> AnyPublisher<[CommitHistory], NetworkError> {
+    func fetchCommitHistories(with username: String) -> AnyPublisher<[CommitHistory], Error> {
         guard let url = URL(string: baseURL) else {
-            return Fail(error: .invalidURL).eraseToAnyPublisher()
+            return Fail(error: NetworkError.invalidURL).eraseToAnyPublisher()
         }
         guard !username.isEmpty else {
-            return Fail(error: .invalidUsername).eraseToAnyPublisher() // 또는 사용자 지정 오류
+            return Fail(error: NetworkError.invalidUsername).eraseToAnyPublisher() // 또는 사용자 지정 오류
         }
         
         
@@ -102,7 +105,7 @@ class NetworkManager {
             .eraseToAnyPublisher()
     }
     
-    func getUserInfo(with username: String) -> AnyPublisher<User, NetworkError> {
+    func getUserInfo(with username: String) -> AnyPublisher<User, Error> {
         let endpoint = _baseURL + "/users/\(username)"
         let decoder = JSONDecoder()
         decoder.keyDecodingStrategy = .convertFromSnakeCase
@@ -137,7 +140,7 @@ class NetworkManager {
             .eraseToAnyPublisher()
     }
     
-    func getFollowers(for username: String, page: Int) -> AnyPublisher<[Follower],NetworkError> {
+    func getFollowers(for username: String, page: Int) -> AnyPublisher<[Follower],Error> {
         let endpoint = _baseURL + "/users/\(username)/followers?per_page=\(_followersPerPage)&page=\(page)"
         let decoder = JSONDecoder()
         decoder.dateDecodingStrategy = .iso8601
@@ -184,6 +187,16 @@ extension NetworkManager {
 // MARK: - getRepositories & getCommits
 extension NetworkManager {
     func getRepositories(for username: String) -> AnyPublisher<[Repository], Error> {
+        
+        let cacheKey = NSString(string: "repos-\(username)")
+
+        if let cachedRepos = cache.object(forKey: cacheKey) as? [Repository] {
+            print("I will show you what cache is ")
+            return Just(cachedRepos)
+                .setFailureType(to: Error.self)
+                .eraseToAnyPublisher()
+        }
+        
         let endpoint = "https://api.github.com/users/\(username)/repos"
         guard let url = URL(string: endpoint) else {
             return Fail(error: NetworkError.invalidURL).eraseToAnyPublisher()
@@ -195,10 +208,22 @@ extension NetworkManager {
         return URLSession.shared.dataTaskPublisher(for: request)
             .map(\.data)
             .decode(type: [Repository].self, decoder: JSONDecoder())
+            .handleEvents(receiveOutput: { [weak self] repos in
+                self?.cache.setObject(repos as NSArray, forKey: cacheKey)
+            })
             .eraseToAnyPublisher()
     }
     
     func getCommits(for repo: String, owner: String) -> AnyPublisher<[Commit], Error> {
+        
+        let cacheKey = NSString(string: "commits-\(owner)-\(repo)")
+        if let cachedCommits = cache.object(forKey: cacheKey) as? [Commit] {
+            print("I will show you what cache is ")
+            return Just(cachedCommits)
+                .setFailureType(to: Error.self)
+                .eraseToAnyPublisher()
+        }
+        
         let endpoint = "https://api.github.com/repos/\(owner)/\(repo)/commits?per_page=100"
         guard let url = URL(string: endpoint) else {
             return Fail(error: NetworkError.invalidURL).eraseToAnyPublisher()
@@ -224,6 +249,9 @@ extension NetworkManager {
                 }
             }
             .decode(type: [Commit].self, decoder: JSONDecoder())
+            .handleEvents(receiveOutput: { [weak self] commits in
+                self?.cache.setObject(commits as NSArray, forKey: cacheKey)
+            })
             .catch { error -> AnyPublisher<[Commit], Error> in
                 print("Error for \(repo): \(error)")
                 return Just([]).setFailureType(to: Error.self).eraseToAnyPublisher()

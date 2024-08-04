@@ -39,7 +39,7 @@ struct UsernameView: View {
     var body: some View {
         Text(username)
             .font(.system(size: 18, weight: .bold, design: .monospaced))
-            .foregroundColor(.primary)
+            .foregroundStyle(Color.accent)
     }
 }
 
@@ -49,7 +49,7 @@ struct BioView: View {
     var body: some View {
         Text(bio)
             .font(.system(size: 12, design: .monospaced))
-            .foregroundColor(.secondary)
+            .foregroundStyle(Color.accent)
             .lineLimit(2)
     }
 }
@@ -63,7 +63,7 @@ struct LocationView: View {
                 .foregroundColor(.primary)
             Text(location)
                 .font(.system(size: 12, design: .monospaced))
-                .foregroundColor(.secondary)
+                .foregroundStyle(Color.accent)
         }
     }
 }
@@ -77,15 +77,20 @@ struct FollowersView: View {
             Image(systemName: "person.2.fill")
                 .foregroundColor(.primary)
             Text("\(followers)")
+                .foregroundStyle(Color.accent)
                 .font(.system(size: 12, weight: .bold, design: .monospaced))
             Text("followers")
+                .foregroundStyle(Color.accent)
                 .font(.system(size: 10, design: .monospaced))
             Text("|")
+                .foregroundStyle(Color.accent)
                 .font(.system(size: 10, design: .monospaced))
                 .foregroundColor(.secondary)
             Text("\(following)")
+                .foregroundStyle(Color.accent)
                 .font(.system(size: 12, weight: .bold, design: .monospaced))
             Text("following")
+                .foregroundStyle(Color.accent)
                 .font(.system(size: 10, design: .monospaced))
         }
         .foregroundColor(.secondary)

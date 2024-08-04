@@ -18,18 +18,28 @@ struct CommitStatisticsView: View {
                 HStack {
                     
                     Text(stats[index].0)
+                        .foregroundStyle(Color.accent)
                         .frame(width: 30, alignment: .leading)
                     
                     Text(stats[index].1)
-                        .frame(width: 80, alignment: .leading)
-                    
-                    Text("\(stats[index].2) commits")
-                        .frame(width: 100, alignment: .leading)
-                    
+                        .foregroundStyle(Color.accent)
+                        .frame(width: 60, alignment: .leading)
+                        .font(.system(size: 12).weight(.semibold))
+                    Spacer()
+                    HStack  {
+                        Spacer()
+                        Text("\(stats[index].2)")
+                            .foregroundStyle(Color.accent)
+                            .font(.system(size: 13).weight(.semibold))
+                        Spacer()
+                        Text(" commits")
+                            .foregroundStyle(Color.accent)
+                            .font(.system(size: 8).weight(.semibold))
+                    }
                     GeometryReader { geometry in
                         HStack(spacing: 0) {
                             Rectangle()
-                                .fill(Color.green.opacity(0.8))
+                                .fill(Color.green)
                                 .frame(width: geometry.size.width * stats[index].3)
                             
                             Rectangle()
@@ -40,7 +50,10 @@ struct CommitStatisticsView: View {
                     .clipShape(RoundedRectangle(cornerRadius: 5))
                     
                     Text(String(format: "%.1f%%", stats[index].3 * 100))
-                        .frame(width: 50, alignment: .trailing)
+                        .foregroundStyle(Color.accent)
+                        .frame(width: 30, alignment: .trailing)
+                        .font(.system(size: 8).weight(.semibold))
+                    
                 }
             }
         }

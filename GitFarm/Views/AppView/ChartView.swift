@@ -9,7 +9,7 @@ import SwiftUI
 import Charts
 
 struct ChartView: View {
-    @ObservedObject var viewModel: CommitHistoryViewModel
+    @StateObject var viewModel: CommitHistoryViewModel
     @State private var selectedPeriod: Int = 30
     
     private let periods = [7, 30, 60]

@@ -42,6 +42,7 @@ struct FollowerListView: View {
                                 ProgressView()
                             }
                             Text(follower.login ?? "")
+                                .foregroundStyle(Color.accent)
                                 .font(.caption)
                                 .lineLimit(1)
                         }

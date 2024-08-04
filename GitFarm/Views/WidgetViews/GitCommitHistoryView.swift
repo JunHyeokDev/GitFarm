@@ -13,6 +13,7 @@ struct GitCommitHistoryView: View {
     var user: User?
     let columns: Int
     let rows = 7
+    let commitTimeStatistics : CommitTimeStatistics
 
     var body: some View {
         let commitHistorySet = CommitHistoryViewModel.commitHistorySet(with: commitHistories ?? [], columnsCount: columns)
@@ -34,14 +35,14 @@ struct GitCommitHistoryView: View {
                     }
                 }
                 .frame(height: geometry.size.height * 0.40)
-                
-                FenceView(parentWidth: geometry.size.width)
-                    .frame(height: geometry.size.height * 0.15)
-                    .offset(y:-10)
-
-                UserInfoView(user: user ?? User.defaultUser, parentWidth: geometry.size.width)
-                    .frame(height: geometry.size.height * 0.35)
-                    .offset(y:-15)
+                CommitStatisticsView(stats: [
+                    ("🐥","Early Bird", commitTimeStatistics.morning,Double(commitTimeStatistics.morning)/Double(commitTimeStatistics.totalCommits)),
+                    ("🧑‍💻","Working hours", commitTimeStatistics.afternoon,Double(commitTimeStatistics.afternoon)/Double(commitTimeStatistics.totalCommits)),
+                    ("🌙","Over work", commitTimeStatistics.evening,Double(commitTimeStatistics.evening)/Double(commitTimeStatistics.totalCommits)),
+                    ("🧟","Coding Zombie", commitTimeStatistics.night,Double(commitTimeStatistics.night)/Double(commitTimeStatistics.totalCommits)),
+                ])
+                .padding(.vertical, 10)
+                .padding(.horizontal,10)
             }
         }
         .edgesIgnoringSafeArea(.all)

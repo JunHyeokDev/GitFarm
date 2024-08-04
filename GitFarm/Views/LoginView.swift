@@ -14,12 +14,14 @@ struct LoginView: View {
     var body: some View {
         VStack {
             Text("Welcome to GitFarm")
+                .foregroundStyle(Color.accent)
                 .font(.largeTitle)
                 .padding()
             
             Button("Login with GitHub") {
                 loginManager.requestCodeToGitHub()
             }
+            .foregroundStyle(Color.accent)
             .padding()
         }
     }

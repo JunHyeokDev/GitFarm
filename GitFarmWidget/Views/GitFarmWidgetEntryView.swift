@@ -20,9 +20,9 @@ struct GitFarmWidgetEntryView : View {
             case .systemMedium:
                 GitCommitHistoryView2(commitHistories: entry.commitHistories, user: user, columns: entry.configuration.numberOfColumns)
             case .systemLarge:
-                GitCommitHistoryView(commitHistories: entry.commitHistories, user: user, columns: entry.configuration.numberOfColumns)
+                GitCommitHistoryView(commitHistories: entry.commitHistories, user: user, columns: entry.configuration.numberOfColumns, commitTimeStatistics: entry.commitTimeline)
             case .accessoryRectangular:
-                GitCommitHistoryView(commitHistories: entry.commitHistories, user: user, columns: entry.configuration.numberOfColumns)
+                GitCommitHistoryView(commitHistories: entry.commitHistories, user: user, columns: entry.configuration.numberOfColumns, commitTimeStatistics: entry.commitTimeline)
             default:
                 Text("")
             }
