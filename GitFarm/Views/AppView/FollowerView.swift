@@ -14,126 +14,205 @@ struct FollowerView: View {
     @StateObject private var viewModel = FollowerViewModel()
     @Environment(\.presentationMode) var presentationMode
     
+    @State private var isDataReady = false
+    
     var body: some View {
-        ScrollView {
-            VStack {
-                if viewModel.isLoading {
-                    ProgressView()
-                } else if let user = viewModel.user {
-                    VStack(alignment: .leading, spacing: 30) {
-                        HStack(spacing: 10) {
-                            AsyncImage(url: URL(string: user.avatarUrl)) { image in
-                                image
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(width: 100, height: 100)
-                                    .clipShape(Circle())
-                            } placeholder: {
-                                ProgressView()
-                            }
-                            
-                            VStack(alignment: .leading, spacing: 10) {
-                                Text(user.login)
-                                    .font(.largeTitle)
-                                    .font(.system(size: 24,weight: .bold))
-                                HStack(spacing:7) {
-                                    Image(systemName: "figure.walk")
-                                        .frame(width: 15,height: 15)
-                                    Text(user.name ?? String.defaultName())
-                                        .font(.system(size: 16,weight: .light))
-                                }
-                                .foregroundStyle(.secondary)
-                                HStack(spacing:7) {
-                                    Image(systemName: "mappin.and.ellipse")
-                                        .frame(width: 15,height: 15)
-                                    Text(user.location ?? String.defaultLocation())
-                                        .font(.system(size: 16,weight: .light))
-                                }
-                                .foregroundStyle(.secondary)
-                            }
-                        }
-                        VStack {
-                            HStack(spacing: 15) {
-                                statView(title: "Followers", count: user.followers)
-                                Spacer()
-                                statView(title: "Following", count: user.following)
-                            }
-                            Button {
-
-                            } label: {
-                                Text("Get Followers")
-                                    .frame(maxWidth: .infinity)
-                                    .padding()
-                                    .background(Color.green)
-                                    .foregroundColor(.white)
-                                    .cornerRadius(10)
-                            }
-                        }
-                        .padding()
-                        .background(colorScheme == .dark ? Color.accentColor.opacity(0.1) : Color.accentColor.opacity(0.05)) // 배경색 추가
-                        .cornerRadius(15)
-                    }
-                    
+        ZStack {
+            if viewModel.isLoading || !isDataReady {
+                FollowLoadingView()
+            } else {
+                ScrollView {
                     VStack {
-                        HStack(spacing: 15) {
-                            statView(title: "Public Repos", count: user.publicRepos)
-                            Spacer()
-                            statView(title: "Public Gists", count: user.publicGists)
-                        }
-                        
-                        Button {
-                            if let url = URL(string: user.htmlUrl), UIApplication.shared.canOpenURL(url) {
-                                let options: [UIApplication.OpenExternalURLOptionsKey: Any] = [
-                                    .universalLinksOnly: false // 사용자 설정 브라우저를 사용하도록 설정
-                                ]
-                                UIApplication.shared.open(url, options: options)
-                            } else {
-                                print("Fail to open the github link..;;")
+                        if let user = viewModel.user {
+                            FollowUserInfoView(user: user)
+                            
+                            RepositoryStatsView(user: user)
+                            
+                            if let stats = viewModel.commitStats {
+                                CommitStatisticsView(stats: [
+                                    ("🐥", "Early\nBird", stats.morning, Double(stats.morning) / Double(stats.totalCommits)),
+                                    ("🧑‍💻", "Working\nhours", stats.afternoon, Double(stats.afternoon) / Double(stats.totalCommits)),
+                                    ("🌙", "OverWork", stats.evening, Double(stats.evening) / Double(stats.totalCommits)),
+                                    ("🧟", "Coding\nZombie", stats.night, Double(stats.night) / Double(stats.totalCommits))
+                                ])
                             }
-                        } label: {
-                            Text("Check Github Profile")
-                                .frame(maxWidth: .infinity)
-                                .padding()
-                                .background(Color.purple)
-                                .foregroundColor(.white)
-                                .cornerRadius(10)
+                        } else {
+                            Text("No user data available")
+                                .foregroundStyle(Color.accent)
                         }
                     }
                     .padding()
-                    .background(colorScheme == .dark ? Color.secondary.opacity(0.2) : Color.secondary.opacity(0.1))
-                    .cornerRadius(15)
-                    
-                    if let stats = viewModel.commitStats {
-                        CommitStatisticsView(stats: [
-                            ("🐥","Early Bird", stats.morning,Double(stats.morning)/Double(stats.totalCommits)),
-                            ("🧑‍💻","Working hours", stats.afternoon,Double(stats.afternoon)/Double(stats.totalCommits)),
-                            ("🌙","Over work", stats.evening,Double(stats.evening)/Double(stats.totalCommits)),
-                            ("🧟","Coding Zombie", stats.night,Double(stats.night)/Double(stats.totalCommits)),
-                        ])
-                    }
-                    
-                } else {
-                    Text("No user data available")
                 }
+                .transition(.opacity)
+                .animation(.easeInOut(duration: 0.5), value: isDataReady)
             }
-            .padding()
         }
         .navigationBarItems(trailing: Button("Done") {
             presentationMode.wrappedValue.dismiss()
         })
         .onAppear {
-            print("Appear!")
             viewModel.loadUserInfo(username: username)
         }
+        .onChange(of: viewModel.user) { _ in
+            checkDataReadiness()
+        }
+        .onChange(of: viewModel.commitStats) { _ in
+            checkDataReadiness()
+        }
+        .alert(item: Binding<AlertItem?>(
+            get: { viewModel.errorMessage.map { AlertItem(message: $0) } },
+            set: { _ in viewModel.errorMessage = nil }
+        )) { alertItem in
+            Alert(title: Text("Error"), message: Text(alertItem.message))
+        }
     }
+    
+    private func checkDataReadiness() {
+        if !viewModel.isLoading && viewModel.user != nil && viewModel.commitStats != nil {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                withAnimation {
+                    isDataReady = true
+                }
+            }
+        }
+    }
+}
+
+struct FollowLoadingView: View {
+    var body: some View {
+        VStack {
+            ProgressView()
+            Text("Loading data...")
+                .foregroundStyle(Color.accent)
+                .padding()
+        }
+    }
+}
+
+struct FollowUserInfoView: View {
+    let user: User
+    
+    var body: some View {
+        VStack(alignment: .leading, spacing: 30) {
+            HStack(spacing: 10) {
+                AsyncImage(url: URL(string: user.avatarUrl)) { image in
+                    image
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 100, height: 100)
+                        .clipShape(Circle())
+                } placeholder: {
+                    ProgressView()
+                }
+                
+                VStack(alignment: .leading, spacing: 10) {
+                    Text(user.login)
+                        .foregroundStyle(Color.accent)
+                        .font(.largeTitle)
+                        .font(.system(size: 24, weight: .bold))
+                    HStack(spacing: 7) {
+                        Image(systemName: "figure.walk")
+                            .frame(width: 15, height: 15)
+                        Text(user.name ?? String.defaultName())
+                            .foregroundStyle(Color.accent)
+                            .font(.system(size: 16, weight: .light))
+                    }
+                    .foregroundStyle(.secondary)
+                    HStack(spacing: 7) {
+                        Image(systemName: "mappin.and.ellipse")
+                            .frame(width: 15, height: 15)
+                        Text(user.location ?? String.defaultLocation())
+                            .foregroundStyle(Color.accent)
+                            .font(.system(size: 16, weight: .light))
+                    }
+                    .foregroundStyle(.secondary)
+                }
+            }
+            VStack {
+                HStack(spacing: 15) {
+                    statView(title: "Followers", count: user.followers)
+                    Spacer()
+                    statView(title: "Following", count: user.following)
+                }
+                Button {
+                    // Action for "Get Followers" button
+                } label: {
+                    Text("Get Followers")
+                        .frame(maxWidth: .infinity)
+                        .padding()
+                        .background(Color.green)
+                        .foregroundStyle(Color.accent)
+                        .cornerRadius(10)
+                }
+            }
+            .padding()
+            .background(Color.accentColor.opacity(0.05))
+            .cornerRadius(15)
+        }
+    }
+    
     private func statView(title: String, count: Int) -> some View {
         VStack(alignment: .leading) {
             Text(title)
                 .font(.caption)
-                .foregroundColor(.secondary)
+                .foregroundStyle(Color.accent)
             Text("\(count)")
+                .foregroundStyle(Color.accent)
                 .font(.title3)
                 .fontWeight(.bold)
         }
     }
+}
+
+struct RepositoryStatsView: View {
+    let user: User
+    @Environment(\.colorScheme) var colorScheme
+    
+    var body: some View {
+        VStack {
+            HStack(spacing: 15) {
+                statView(title: "Public Repos", count: user.publicRepos)
+                Spacer()
+                statView(title: "Public Gists", count: user.publicGists)
+            }
+            
+            Button {
+                if let url = URL(string: user.htmlUrl), UIApplication.shared.canOpenURL(url) {
+                    let options: [UIApplication.OpenExternalURLOptionsKey: Any] = [
+                        .universalLinksOnly: false
+                    ]
+                    UIApplication.shared.open(url, options: options)
+                } else {
+                    print("Failed to open the GitHub link")
+                }
+            } label: {
+                Text("Check GitHub Profile")
+                    .frame(maxWidth: .infinity)
+                    .padding()
+                    .background(Color.purple)
+                    .foregroundStyle(Color.accent)
+                    .cornerRadius(10)
+            }
+        }
+        .padding()
+        .background(colorScheme == .dark ? Color.secondary.opacity(0.2) : Color.secondary.opacity(0.1))
+        .cornerRadius(15)
+    }
+    
+    private func statView(title: String, count: Int) -> some View {
+        VStack(alignment: .leading) {
+            Text(title)
+                .font(.caption)
+                .foregroundStyle(Color.accent)
+            Text("\(count)")
+                .foregroundStyle(Color.accent)
+                .font(.title3)
+                .fontWeight(.bold)
+        }
+    }
+}
+
+struct AlertItem: Identifiable {
+    let id = UUID()
+    let message: String
 }

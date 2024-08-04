@@ -17,11 +17,12 @@ struct Provider: AppIntentTimelineProvider {
     func snapshot(for configuration: ConfigurationAppIntent, in context: Context) async -> GitFarmEntry {
         let user = fetchUserInfo()
         let histories = fetchCommitHistories()
-        
+        let commitTimeline = fetchCommitStats()
         return GitFarmEntry(
             date: Date(),
             user: user,
             commitHistories: histories,
+            commitTimeline: commitTimeline,
             configuration: configuration
         )
     }
@@ -31,6 +32,7 @@ struct Provider: AppIntentTimelineProvider {
         let currentDate = Date()
         let user = fetchUserInfo()
         let histories = fetchCommitHistories()
+        let commitTimeline = fetchCommitStats()
 
         // Generate a timeline consisting of five entries an hour apart, starting from the current date.
         for hourOffset in 0 ..< 5 {
@@ -38,7 +40,8 @@ struct Provider: AppIntentTimelineProvider {
             let entry = GitFarmEntry(
                 date: entryDate,
                 user: user,
-                commitHistories: histories,
+                commitHistories: histories, 
+                commitTimeline: commitTimeline,
                 configuration: configuration
             )
             entries.append(entry)
@@ -62,16 +65,25 @@ struct Provider: AppIntentTimelineProvider {
         }
         return decodedData
     }
+    
+    func fetchCommitStats() -> CommitTimeStatistics {
+        guard let data = UserDefaults(suiteName: "group.com.Jun.GitFarm.FarmWidget")?.data(forKey: "commitTimeline"),
+              let decodedData = try? JSONDecoder().decode(CommitTimeStatistics.self, from: data) else {
+            return CommitTimeStatistics.defaultsInfo()
+        }
+        return decodedData
+    }
 }
 
 struct GitFarmEntry: TimelineEntry {
     let date: Date
     let user: User?
     let commitHistories: [CommitHistory]?
+    let commitTimeline: CommitTimeStatistics
     let configuration: ConfigurationAppIntent
     
     static func loading() -> GitFarmEntry {
-        GitFarmEntry(date: Date(), user: nil, commitHistories: nil, configuration: ConfigurationAppIntent.defaultNumber)
+        GitFarmEntry(date: Date(), user: nil, commitHistories: nil, commitTimeline: CommitTimeStatistics.defaultsInfo(), configuration: ConfigurationAppIntent.defaultNumber)
     }
 }
 

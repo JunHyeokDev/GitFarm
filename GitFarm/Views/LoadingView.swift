@@ -29,7 +29,7 @@ struct LoadingView: View {
             
             Text(message)
                 .font(.headline)
-                .foregroundColor(.secondary)
+                .foregroundStyle(Color.accent)
                 .padding(.top, 20)
         }
     }

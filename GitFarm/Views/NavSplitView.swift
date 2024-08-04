@@ -10,7 +10,8 @@ import SwiftUI
 struct NavSplitView: View {
     
     @EnvironmentObject var commitHistoryViewModel: CommitHistoryViewModel
-    //@State private var selectedCategory: Category? // 기본값 설정
+    @EnvironmentObject var userDataViewModel : UserDataViewModel
+
     @State private var selection: Panel? = Panel.myFarm
     @State private var path = NavigationPath()
 
@@ -20,35 +21,9 @@ struct NavSplitView: View {
             Sidebar(selection: $selection)
         } detail: {
             NavigationStack(path: $path) {
-                DetailView(selection: $selection, commitHistoryViewModel: commitHistoryViewModel)
+                DetailView(selection: $selection, commitHistoryViewModel: commitHistoryViewModel, userDataViewModel: userDataViewModel)
             }
         }
-    }
-}
-
-struct CategoryDetailView: View {
-    @ObservedObject var commitHistoryViewModel: CommitHistoryViewModel
-    let category: Category
-    
-    var body: some View {
-        List(category.items) { item in
-            NavigationLink(destination: MyItemDetailView(commitHistoryViewModel: commitHistoryViewModel, item: item)) {
-                Text(item.name)
-            }
-        }
-        .navigationTitle(category.title)
-    }
-}
-
-struct MyItemDetailView: View {
-    @ObservedObject var commitHistoryViewModel: CommitHistoryViewModel
-    let item: MyItem
-    
-    var body: some View {
-        VStack {
-            EntryView(viewModel: commitHistoryViewModel)
-        }
-        .navigationTitle(item.name)
     }
 }
 
