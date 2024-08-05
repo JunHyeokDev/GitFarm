@@ -117,6 +117,7 @@
 
 import SwiftUI
 import Combine
+import WidgetKit
 
 class AppCoordinator: ObservableObject {
     @Published var appState: AppState = .loading
@@ -135,6 +136,48 @@ class AppCoordinator: ObservableObject {
     init() {
         self.loginManager = LoginManager.shared
         setupObservers()
+        setupWidgetRefreshObserver()
+    }
+    
+    private func setupWidgetRefreshObserver() {
+        NotificationCenter.default.addObserver(
+            forName: Notification.Name("RefreshWidgetDataFromApp"),
+            object: nil,
+            queue: .main
+        ) { [weak self] _ in
+            Task { [weak self] in 
+                await self?.refreshWidgetData()
+            }
+        }
+    }
+    
+    @MainActor
+    func refreshWidgetData() async {
+        guard let user = loginManager.currentUser else { return }
+        
+        do {
+            let userDataVM = UserDataViewModel()
+            let commitHistoryVM = await CommitHistoryViewModel(with: user)
+            
+            await userDataVM.loadUserData(username: user.login)
+            await commitHistoryVM.fetchCommitHistories(with: user.login)
+            
+            if let userDefaults = UserDefaults(suiteName: "group.com.Jun.GitFarm.FarmWidget") {
+                if let encodedUser = try? JSONEncoder().encode(user) {
+                    userDefaults.set(encodedUser, forKey: "userInfoVM")
+                }
+                if let encodedStats = try? JSONEncoder().encode(userDataVM.commitStats) {
+                    userDefaults.set(encodedStats, forKey: "commitTimeline")
+                }
+                if let encodedHistories = try? JSONEncoder().encode(commitHistoryVM.commitHistories) {
+                    userDefaults.set(encodedHistories, forKey: "commitHistories")
+                }
+            }
+            
+            WidgetCenter.shared.reloadAllTimelines()
+        } catch {
+            print("Error refreshing widget data: \(error)")
+        }
     }
     
     private func setupObservers() {

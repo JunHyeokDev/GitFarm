@@ -41,14 +41,33 @@ class UserDataViewModel: ObservableObject {
 //            .store(in: &cancellables)
 //    }
     
+//    func loadUserData(username: String) async {
+//        isLoading = true
+//        error = nil
+//        
+//        do {
+//            let user = try await NetworkManager.shared.getUserInfo(with: username)
+//            self.user = user
+//            try await loadRepositoriesAndCommits(for: username)
+//        } catch {
+//            self.error = error.localizedDescription
+//        }
+//        
+//        isLoading = false
+//    }
+    
     func loadUserData(username: String) async {
         isLoading = true
         error = nil
         
         do {
-            let user = try await NetworkManager.shared.getUserInfo(with: username)
+            async let userInfo = NetworkManager.shared.getUserInfo(with: username)
+            async let repositories = NetworkManager.shared.getRepositories(for: username)
+            
+            let (user, repos) = try await (userInfo, repositories)
             self.user = user
-            try await loadRepositoriesAndCommits(for: username)
+            
+            try await loadCommits(for: repos, username: username)
         } catch {
             self.error = error.localizedDescription
         }
@@ -56,6 +75,49 @@ class UserDataViewModel: ObservableObject {
         isLoading = false
     }
     
+    // MARK: - Parallel Processing
+    // each tasks deal different data, So I think It has row possiblity of Race Condition... I guess..?
+    private func loadCommits(for repositories: [Repository], username: String) async throws {
+        let allCommits = try await withThrowingTaskGroup(of: [Commit].self) { group in
+            for repo in repositories {
+                group.addTask {
+                    let commits = try await NetworkManager.shared.getCommits(for: repo.name, owner: username)
+                    return commits
+                }
+            }
+            
+            var commits = [Commit]()
+            for try await repoCommits in group {
+                commits.append(contentsOf: repoCommits)
+            }
+            return commits
+        }
+        
+        analyzeCommits(allCommits)
+    }
+    
+    
+    private func analyzeCommits(_ commits: [Commit]) {
+        var stats = CommitTimeStatistics()
+        let dateFormatter = ISO8601DateFormatter()
+        
+        for commit in commits {
+            if let date = dateFormatter.date(from: commit.commit.author.date) {
+                let hour = Calendar.current.component(.hour, from: date)
+                switch hour {
+                case 6..<12: stats.morning += 1
+                case 12..<18: stats.afternoon += 1
+                case 18..<24: stats.evening += 1
+                default: stats.night += 1
+                }
+            }
+        }
+        
+        stats.totalCommits = commits.count
+        self.commitStats = stats
+    }
+    
+// MARK: - loadRepositoriesAndCommits before async
 //    private func loadRepositoriesAndCommits(for username: String) -> AnyPublisher<Void, Error> {
 //        NetworkManager.shared.getRepositories(for: username)
 //            .flatMap { repositories -> AnyPublisher<[Commit], Error> in
@@ -85,7 +147,8 @@ class UserDataViewModel: ObservableObject {
         analyzeCommits(allCommits)
     }
 
-
+// MARK: - before async
+    
 //    private func analyzeCommits(_ commits: [Commit]) {
 //        var stats = CommitTimeStatistics()
 //        let dateFormatter = ISO8601DateFormatter()
@@ -106,23 +169,26 @@ class UserDataViewModel: ObservableObject {
 //        self.commitStats = stats
 //    }
     
-    private func analyzeCommits(_ commits: [Commit]) {
-        var stats = CommitTimeStatistics()
-        let dateFormatter = ISO8601DateFormatter()
-        
-        for commit in commits {
-            if let date = dateFormatter.date(from: commit.commit.author.date) {
-                let hour = Calendar.current.component(.hour, from: date)
-                switch hour {
-                case 6..<12: stats.morning += 1
-                case 12..<18: stats.afternoon += 1
-                case 18..<24: stats.evening += 1
-                default: stats.night += 1
-                }
-            }
-        }
-        
-        stats.totalCommits = commits.count
-        self.commitStats = stats
-    }
+    
+// MARK: - before refactoring
+    
+//    private func analyzeCommits(_ commits: [Commit]) {
+//        var stats = CommitTimeStatistics()
+//        let dateFormatter = ISO8601DateFormatter()
+//        
+//        for commit in commits {
+//            if let date = dateFormatter.date(from: commit.commit.author.date) {
+//                let hour = Calendar.current.component(.hour, from: date)
+//                switch hour {
+//                case 6..<12: stats.morning += 1
+//                case 12..<18: stats.afternoon += 1
+//                case 18..<24: stats.evening += 1
+//                default: stats.night += 1
+//                }
+//            }
+//        }
+//        
+//        stats.totalCommits = commits.count
+//        self.commitStats = stats
+//    }
 }
