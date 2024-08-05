@@ -10,11 +10,15 @@ import SwiftUI
 
 struct Provider: AppIntentTimelineProvider {
     func placeholder(in context: Context) -> GitFarmEntry {
-//        GitFarmEntry(date: Date(), configuration: ConfigurationAppIntent())
-        return GitFarmEntry.loading()
+        GitFarmEntry.loading()
     }
 
     func snapshot(for configuration: ConfigurationAppIntent, in context: Context) async -> GitFarmEntry {
+        let isLoading = UserDefaults(suiteName: "group.com.Jun.GitFarm.FarmWidget")?.bool(forKey: "widgetIsLoading") ?? false
+        if isLoading {
+            return GitFarmEntry.loading()
+        }
+        
         let user = fetchUserInfo()
         let histories = fetchCommitHistories()
         let commitTimeline = fetchCommitStats()
@@ -23,31 +27,34 @@ struct Provider: AppIntentTimelineProvider {
             user: user,
             commitHistories: histories,
             commitTimeline: commitTimeline,
-            configuration: configuration
+            configuration: configuration,
+            isLoading: isLoading
         )
     }
     
     func timeline(for configuration: ConfigurationAppIntent, in context: Context) async -> Timeline<GitFarmEntry> {
-        var entries: [GitFarmEntry] = []
+        let isLoading = UserDefaults(suiteName: "group.com.Jun.GitFarm.FarmWidget")?.bool(forKey: "widgetIsLoading") ?? false
         let currentDate = Date()
+        let refreshDate = Calendar.current.date(byAdding: .second, value: 5, to: currentDate)!
+        
+        if isLoading {
+            let entry = GitFarmEntry.loading()
+            return Timeline(entries: [entry], policy: .after(refreshDate))
+        }
+        
         let user = fetchUserInfo()
         let histories = fetchCommitHistories()
         let commitTimeline = fetchCommitStats()
-
-        // Generate a timeline consisting of five entries an hour apart, starting from the current date.
-        for hourOffset in 0 ..< 5 {
-            let entryDate = Calendar.current.date(byAdding: .hour, value: hourOffset, to: currentDate)!
-            let entry = GitFarmEntry(
-                date: entryDate,
-                user: user,
-                commitHistories: histories, 
-                commitTimeline: commitTimeline,
-                configuration: configuration
-            )
-            entries.append(entry)
-        }
-
-        return Timeline(entries: entries, policy: .atEnd)
+        let entry = GitFarmEntry(
+            date: currentDate,
+            user: user,
+            commitHistories: histories,
+            commitTimeline: commitTimeline,
+            configuration: configuration,
+            isLoading: isLoading
+        )
+        
+        return Timeline(entries: [entry], policy: .after(refreshDate))
     }
     
     func fetchCommitHistories() -> [CommitHistory] {
@@ -81,9 +88,17 @@ struct GitFarmEntry: TimelineEntry {
     let commitHistories: [CommitHistory]?
     let commitTimeline: CommitTimeStatistics
     let configuration: ConfigurationAppIntent
+    let isLoading: Bool
     
     static func loading() -> GitFarmEntry {
-        GitFarmEntry(date: Date(), user: nil, commitHistories: nil, commitTimeline: CommitTimeStatistics.defaultsInfo(), configuration: ConfigurationAppIntent.defaultNumber)
+        GitFarmEntry(
+            date: Date(),
+            user: nil,
+            commitHistories: nil,
+            commitTimeline: CommitTimeStatistics.defaultsInfo(),
+            configuration: ConfigurationAppIntent.defaultNumber,
+            isLoading: true
+        )
     }
 }
 
