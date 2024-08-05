@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct CommitStatisticsView: View {
-    
     @Environment(\.colorScheme) var colorScheme
     let stats: [(String, String, Int, Double)]
     
@@ -16,34 +15,34 @@ struct CommitStatisticsView: View {
         VStack(spacing: 10) {
             ForEach(stats.indices, id: \.self) { index in
                 HStack {
-                    
                     Text(stats[index].0)
                         .foregroundStyle(Color.accent)
                         .frame(width: 30, alignment: .leading)
                     
                     Text(stats[index].1)
                         .foregroundStyle(Color.accent)
-                        .frame(width: 60, alignment: .leading)
-                        .font(.system(size: 12).weight(.semibold))
+                        .frame(width: 80, alignment: .leading)
+                        .font(.system(size: 10).weight(.semibold))
+                        .lineLimit(2)
+                    
                     Spacer()
-                    HStack  {
-                        Spacer()
-                        Text("\(stats[index].2)")
-                            .foregroundStyle(Color.accent)
-                            .font(.system(size: 13).weight(.semibold))
-                        Spacer()
-                        Text(" commits")
-                            .foregroundStyle(Color.accent)
-                            .font(.system(size: 8).weight(.semibold))
-                    }
+                    
                     GeometryReader { geometry in
-                        HStack(spacing: 0) {
-                            Rectangle()
-                                .fill(Color.green)
-                                .frame(width: geometry.size.width * stats[index].3)
-                            
+                        ZStack(alignment: .leading) {
                             Rectangle()
                                 .fill(Color.secondary.opacity(0.1))
+                            
+                            if stats[index].3 > 0 {
+                                Rectangle()
+                                    .fill(Color.green)
+                                    .frame(width: geometry.size.width * stats[index].3)
+                            }
+                            
+                            Text("\(stats[index].2) commits")
+                                .font(.system(size: 10).weight(.semibold))
+                                .foregroundColor(stats[index].3 > 0.5 ? .white : .accent)
+                                .padding(.horizontal, 5)
+                                .frame(maxWidth: .infinity, alignment: .center)
                         }
                     }
                     .frame(height: 20)
@@ -53,7 +52,6 @@ struct CommitStatisticsView: View {
                         .foregroundStyle(Color.accent)
                         .frame(width: 30, alignment: .trailing)
                         .font(.system(size: 8).weight(.semibold))
-                    
                 }
             }
         }

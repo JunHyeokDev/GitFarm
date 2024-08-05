@@ -11,7 +11,7 @@ struct FollowerView: View {
     let username: String
     
     @Environment(\.colorScheme) var colorScheme
-    @StateObject private var viewModel = FollowerViewModel()
+    @StateObject private var viewModel = UserDataViewModel()
     @Environment(\.presentationMode) var presentationMode
     
     @State private var isDataReady = false
@@ -30,10 +30,10 @@ struct FollowerView: View {
                             
                             if let stats = viewModel.commitStats {
                                 CommitStatisticsView(stats: [
-                                    ("🐥", "Early\nBird", stats.morning, Double(stats.morning) / Double(stats.totalCommits)),
-                                    ("🧑‍💻", "Working\nhours", stats.afternoon, Double(stats.afternoon) / Double(stats.totalCommits)),
-                                    ("🌙", "OverWork", stats.evening, Double(stats.evening) / Double(stats.totalCommits)),
-                                    ("🧟", "Coding\nZombie", stats.night, Double(stats.night) / Double(stats.totalCommits))
+                                    ("🐥", "Early Bird", stats.morning, Double(stats.morning) / Double(stats.totalCommits)),
+                                    ("🧑‍💻", "Work Hour", stats.afternoon, Double(stats.afternoon) / Double(stats.totalCommits)),
+                                    ("🌙", "Over Work", stats.evening, Double(stats.evening) / Double(stats.totalCommits)),
+                                    ("🧟", "Coding Zombie", stats.night, Double(stats.night) / Double(stats.totalCommits))
                                 ])
                             }
                         } else {
@@ -50,8 +50,9 @@ struct FollowerView: View {
         .navigationBarItems(trailing: Button("Done") {
             presentationMode.wrappedValue.dismiss()
         })
-        .onAppear {
-            viewModel.loadUserInfo(username: username)
+        .task {
+            await viewModel.loadUserData(username: username)
+            checkDataReadiness()
         }
         .onChange(of: viewModel.user) { _ in
             checkDataReadiness()
@@ -59,12 +60,12 @@ struct FollowerView: View {
         .onChange(of: viewModel.commitStats) { _ in
             checkDataReadiness()
         }
-        .alert(item: Binding<AlertItem?>(
-            get: { viewModel.errorMessage.map { AlertItem(message: $0) } },
-            set: { _ in viewModel.errorMessage = nil }
-        )) { alertItem in
-            Alert(title: Text("Error"), message: Text(alertItem.message))
-        }
+//        .alert(item: Binding<AlertItem?>(
+//            get: { viewModel.error.map { AlertItem(message: $0.localizedDescription) } },
+//            set: { _ in viewModel.error = nil }
+//        )) { alertItem in
+//            Alert(title: Text("Error"), message: Text(alertItem.message))
+//        }
     }
     
     private func checkDataReadiness() {
