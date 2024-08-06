@@ -42,7 +42,6 @@ struct GitCommitHistoryView: View {
                     ("🧟","Coding Zombie", commitTimeStatistics.night,Double(commitTimeStatistics.night)/Double(commitTimeStatistics.totalCommits)),
                 ])
                 .padding(.vertical, 10)
-                .padding(.horizontal,10)
             }
         }
         .edgesIgnoringSafeArea(.all)

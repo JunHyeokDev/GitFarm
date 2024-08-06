@@ -58,12 +58,6 @@ public struct GitHubContributionsResponse: Codable {
         }
         
         commitHistories.sort { $0.date < $1.date }
-
-        print("Final Commit Histories:")
-        for commit in commitHistories {
-            print("Date: \(commit.date), Count: \(commit.count), Growth Stage: \(commit.growthStage)")
-        }
-
         return commitHistories
     }
 }

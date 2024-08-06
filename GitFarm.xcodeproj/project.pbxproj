@@ -77,6 +77,8 @@
 		BFC5631C2C529ABD00CE79CB /* GitFarmTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFC5631B2C529ABD00CE79CB /* GitFarmTests.swift */; };
 		BFC563262C529ABD00CE79CB /* GitFarmUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFC563252C529ABD00CE79CB /* GitFarmUITests.swift */; };
 		BFC563282C529ABD00CE79CB /* GitFarmUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFC563272C529ABD00CE79CB /* GitFarmUITestsLaunchTests.swift */; };
+		BFCED37D2C60A621005F5FA5 /* RefreshWidgetIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFCED37C2C60A61A005F5FA5 /* RefreshWidgetIntent.swift */; };
+		BFCED37E2C60AAFB005F5FA5 /* RefreshWidgetIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFCED37C2C60A61A005F5FA5 /* RefreshWidgetIntent.swift */; };
 		BFE082442C5A28F600FA1FE0 /* Sidebar.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFE082432C5A28F600FA1FE0 /* Sidebar.swift */; };
 		BFE082462C5A2CC200FA1FE0 /* DetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFE082452C5A2CC200FA1FE0 /* DetailView.swift */; };
 		BFE082482C5A41DD00FA1FE0 /* ChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFE082472C5A41DD00FA1FE0 /* ChartView.swift */; };
@@ -182,6 +184,7 @@
 		BFC563212C529ABD00CE79CB /* GitFarmUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GitFarmUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		BFC563252C529ABD00CE79CB /* GitFarmUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitFarmUITests.swift; sourceTree = "<group>"; };
 		BFC563272C529ABD00CE79CB /* GitFarmUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitFarmUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		BFCED37C2C60A61A005F5FA5 /* RefreshWidgetIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RefreshWidgetIntent.swift; sourceTree = "<group>"; };
 		BFE082432C5A28F600FA1FE0 /* Sidebar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Sidebar.swift; sourceTree = "<group>"; };
 		BFE082452C5A2CC200FA1FE0 /* DetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailView.swift; sourceTree = "<group>"; };
 		BFE082472C5A41DD00FA1FE0 /* ChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartView.swift; sourceTree = "<group>"; };
@@ -301,6 +304,7 @@
 				BF5E27392C589425009E31C4 /* Views */,
 				BF5E27282C5892B8009E31C4 /* GitFarmWidgetBundle.swift */,
 				BF5E272C2C5892B8009E31C4 /* AppIntent.swift */,
+				BFCED37C2C60A61A005F5FA5 /* RefreshWidgetIntent.swift */,
 				BF5E272E2C5892B9009E31C4 /* Assets.xcassets */,
 				BF5E27302C5892B9009E31C4 /* Info.plist */,
 				BF5E27312C5892B9009E31C4 /* GitFarmWidget.entitlements */,
@@ -584,6 +588,7 @@
 				BF5E272B2C5892B8009E31C4 /* GitFarmWidget.swift in Sources */,
 				BF6CFB0E2C5CBDED00EE06C4 /* FollowerListViewModel.swift in Sources */,
 				BF5E273F2C58A1CE009E31C4 /* CommitHistory.swift in Sources */,
+				BFCED37D2C60A621005F5FA5 /* RefreshWidgetIntent.swift in Sources */,
 				BF5E27492C58AA16009E31C4 /* FenceView.swift in Sources */,
 				BF6CFB0D2C5CAFD900EE06C4 /* Repository.swift in Sources */,
 				BF5E27582C58C3B1009E31C4 /* SkyView.swift in Sources */,
@@ -646,6 +651,7 @@
 				BFE082482C5A41DD00FA1FE0 /* ChartView.swift in Sources */,
 				BF68BF4E2C56345D00263F63 /* Config.swift in Sources */,
 				BF8B57232C5BA708009FE90F /* FollowerView.swift in Sources */,
+				BFCED37E2C60AAFB005F5FA5 /* RefreshWidgetIntent.swift in Sources */,
 				BF0900FE2C52ABDE00F18975 /* User.swift in Sources */,
 				BF59EB842C53F2F300B3F51B /* LoginView.swift in Sources */,
 				BF59EB7E2C53F21E00B3F51B /* UserInfoView.swift in Sources */,

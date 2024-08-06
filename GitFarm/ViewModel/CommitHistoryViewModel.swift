@@ -18,17 +18,17 @@ class CommitHistoryViewModel: ObservableObject {
     @Published var todayContributionCount = 0
     @Published var totalContributionsInThisYear = 0
     
-    init(with user: User) {
+    init(with user: User) async {
         self.user = user
         var username = UserDefaults.standard.string(forKey: "username") ?? ""
         if username == "" {
             username = user.login
         }
-        fetchCommitHistories(with: user.login)
-        updateUser(user)
+        await fetchCommitHistories(with: user.login)
+        await updateUser(user)
     }
     
-    func updateUser(_ user: User) {
+    func updateUser(_ user: User) async {
         self.user = user
         var username = UserDefaults.standard.string(forKey: "username") ?? ""
         if username.isEmpty {
@@ -42,7 +42,7 @@ class CommitHistoryViewModel: ObservableObject {
         saveUserInfoVMToUserDefaults(with: self.user ?? user)
         
         // 새로운 사용자의 커밋 히스토리 가져오기
-        fetchCommitHistories(with: user.login)
+        await fetchCommitHistories(with: user.login)
     }
 
     func saveUserInfoVMToUserDefaults(with user : User) {
@@ -103,31 +103,44 @@ class CommitHistoryViewModel: ObservableObject {
         return result
     }
     
-    func fetchCommitHistories(with username: String) {
-        UserDefaults.standard.set(username, forKey: "username")
-        NetworkManager.shared.fetchCommitHistories(with: username)
-            .receive(on: DispatchQueue.main)
-            .sink(
-                receiveCompletion: { completion in
-                    switch completion {
-                    case .finished:
-                        print("fetchCommitHistories Successfully finished")
-                    case .failure:
-                        print("fetchCommitHistories fail..!")
-                    }
-                },
-                receiveValue: { [weak self] commitHistories in
-
-                    self?.commitHistories = commitHistories
-                    self?.configureVM(with: commitHistories)
-                    self?.saveCommitHistoriesToUserDefaults(with: commitHistories)
-                    // 디버깅을 위한 출력
-//                    print("Total commit histories: \(commitHistories.count)")
-//                    for (index, commit) in commitHistories.enumerated() {
-//                        print("Index: \(index), Date: \(commit.date), Count: \(commit.count)")
+//    func fetchCommitHistories(with username: String) {
+//        UserDefaults.standard.set(username, forKey: "username")
+//        NetworkManager.shared.fetchCommitHistories(with: username)
+//            .receive(on: DispatchQueue.main)
+//            .sink(
+//                receiveCompletion: { completion in
+//                    switch completion {
+//                    case .finished:
+//                        print("fetchCommitHistories Successfully finished")
+//                    case .failure:
+//                        print("fetchCommitHistories fail..!")
 //                    }
-                }
-            )
-            .store(in: &cancellables)
+//                },
+//                receiveValue: { [weak self] commitHistories in
+//
+//                    self?.commitHistories = commitHistories
+//                    self?.configureVM(with: commitHistories)
+//                    self?.saveCommitHistoriesToUserDefaults(with: commitHistories)
+//                    // 디버깅을 위한 출력
+////                    print("Total commit histories: \(commitHistories.count)")
+////                    for (index, commit) in commitHistories.enumerated() {
+////                        print("Index: \(index), Date: \(commit.date), Count: \(commit.count)")
+////                    }
+//                }
+//            )
+//            .store(in: &cancellables)
+//    }
+    
+    func fetchCommitHistories(with username: String) async {
+        do {
+            let commitHistories = try await NetworkManager.shared.fetchCommitHistories(with: username)
+            DispatchQueue.main.async {
+                self.commitHistories = commitHistories
+                self.configureVM(with: commitHistories)
+                self.saveCommitHistoriesToUserDefaults(with: commitHistories)
+            }
+        } catch {
+            print("Error fetching commit histories: \(error)")
+        }
     }
 }
