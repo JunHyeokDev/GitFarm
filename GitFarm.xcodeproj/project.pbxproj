@@ -66,6 +66,8 @@
 		BF6CFB182C5E266200EE06C4 /* UserDataViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF6CFB142C5E21A500EE06C4 /* UserDataViewModel.swift */; };
 		BF6CFB192C5E266D00EE06C4 /* Sidebar.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFE082432C5A28F600FA1FE0 /* Sidebar.swift */; };
 		BF6CFB1D2C5E26AE00EE06C4 /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF6209002C5B9C5A007ED93D /* SearchBar.swift */; };
+		BF862D4B2C630950007A1DA6 /* FollowerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF862D4A2C630950007A1DA6 /* FollowerCell.swift */; };
+		BF862D4E2C631D0B007A1DA6 /* HowToUseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF862D4D2C631D0B007A1DA6 /* HowToUseView.swift */; };
 		BF8B57232C5BA708009FE90F /* FollowerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8B57222C5BA708009FE90F /* FollowerView.swift */; };
 		BF8B57252C5BC830009FE90F /* FollowerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8B57242C5BC830009FE90F /* FollowerViewModel.swift */; };
 		BFC563052C529ABA00CE79CB /* GitFarmApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFC563042C529ABA00CE79CB /* GitFarmApp.swift */; };
@@ -169,6 +171,8 @@
 		BF6CFB102C5CC57500EE06C4 /* CommitStatisticsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommitStatisticsView.swift; sourceTree = "<group>"; };
 		BF6CFB122C5E123900EE06C4 /* PersistanceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistanceManager.swift; sourceTree = "<group>"; };
 		BF6CFB142C5E21A500EE06C4 /* UserDataViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDataViewModel.swift; sourceTree = "<group>"; };
+		BF862D4A2C630950007A1DA6 /* FollowerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowerCell.swift; sourceTree = "<group>"; };
+		BF862D4D2C631D0B007A1DA6 /* HowToUseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HowToUseView.swift; sourceTree = "<group>"; };
 		BF8B57222C5BA708009FE90F /* FollowerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowerView.swift; sourceTree = "<group>"; };
 		BF8B57242C5BC830009FE90F /* FollowerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowerViewModel.swift; sourceTree = "<group>"; };
 		BFC563012C529ABA00CE79CB /* GitFarm.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GitFarm.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -277,6 +281,7 @@
 		BF59EB722C53F13A00B3F51B /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				BF862D4C2C631C83007A1DA6 /* IntroductionView */,
 				BFE082422C5A28DF00FA1FE0 /* AppView */,
 				BF6384302C5A1BA50025FBA8 /* WidgetViews */,
 				BF59EB732C53F15000B3F51B /* EntryView.swift */,
@@ -332,6 +337,14 @@
 				BF59EB792C53F1AF00B3F51B /* GitCommitCellView.swift */,
 			);
 			path = WidgetViews;
+			sourceTree = "<group>";
+		};
+		BF862D4C2C631C83007A1DA6 /* IntroductionView */ = {
+			isa = PBXGroup;
+			children = (
+				BF862D4D2C631D0B007A1DA6 /* HowToUseView.swift */,
+			);
+			path = IntroductionView;
 			sourceTree = "<group>";
 		};
 		BFC562F82C529ABA00CE79CB = {
@@ -412,6 +425,7 @@
 				BF6CFB102C5CC57500EE06C4 /* CommitStatisticsView.swift */,
 				BFE082472C5A41DD00FA1FE0 /* ChartView.swift */,
 				BFE0824C2C5A561D00FA1FE0 /* FollowerListView.swift */,
+				BF862D4A2C630950007A1DA6 /* FollowerCell.swift */,
 				BF8B57222C5BA708009FE90F /* FollowerView.swift */,
 			);
 			path = AppView;
@@ -653,6 +667,8 @@
 				BF8B57232C5BA708009FE90F /* FollowerView.swift in Sources */,
 				BFCED37E2C60AAFB005F5FA5 /* RefreshWidgetIntent.swift in Sources */,
 				BF0900FE2C52ABDE00F18975 /* User.swift in Sources */,
+				BF862D4E2C631D0B007A1DA6 /* HowToUseView.swift in Sources */,
+				BF862D4B2C630950007A1DA6 /* FollowerCell.swift in Sources */,
 				BF59EB842C53F2F300B3F51B /* LoginView.swift in Sources */,
 				BF59EB7E2C53F21E00B3F51B /* UserInfoView.swift in Sources */,
 				BFE082442C5A28F600FA1FE0 /* Sidebar.swift in Sources */,
@@ -919,10 +935,10 @@
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 13.3;
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.Jun.GitFarm;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -961,10 +977,10 @@
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
-				MACOSX_DEPLOYMENT_TARGET = 13.3;
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.Jun.GitFarm;
 				PRODUCT_NAME = "$(TARGET_NAME)";

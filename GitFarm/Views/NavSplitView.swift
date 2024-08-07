@@ -8,22 +8,34 @@
 import SwiftUI
 
 struct NavSplitView: View {
-    
     @EnvironmentObject var commitHistoryViewModel: CommitHistoryViewModel
-    @EnvironmentObject var userDataViewModel : UserDataViewModel
-
+    @EnvironmentObject var userDataViewModel: UserDataViewModel
     @State private var selection: Panel? = Panel.myFarm
     @State private var path = NavigationPath()
 
-
     var body: some View {
         NavigationSplitView {
-            Sidebar(selection: $selection)
+            VStack(spacing: 0) {
+                // Top Image
+                Image("WelcomeToTheFarm") // Replace with your image name
+                    .resizable()
+                    .aspectRatio(contentMode: .fill)
+                    .frame(height: 200)
+                    .clipped()
+                    .clipShape(RoundedRectangle(cornerRadius: 20))
+                    .padding()
+                
+                // Sidebar content
+                Sidebar(selection: $selection)
+                    .background(Color.theme.background)
+            }
+            .background(Color(UIColor.systemBackground))
         } detail: {
             NavigationStack(path: $path) {
                 DetailView(selection: $selection, commitHistoryViewModel: commitHistoryViewModel, userDataViewModel: userDataViewModel)
             }
         }
+        .navigationSplitViewStyle(.balanced)
     }
 }
 

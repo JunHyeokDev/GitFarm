@@ -31,7 +31,7 @@ struct GitFarmApp: App {
     }
     
     func registerBackgroundTasks() {
-        BGTaskScheduler.shared.register(forTaskWithIdentifier: "com.yourapp.refreshWidget", using: nil) { task in
+        BGTaskScheduler.shared.register(forTaskWithIdentifier: "com.Jun.GitFarm.refreshWidget", using: nil) { task in
             self.handleAppRefresh(task: task as! BGAppRefreshTask)
         }
     }
@@ -50,7 +50,7 @@ struct GitFarmApp: App {
     }
     
     func scheduleBackgroundRefresh() {
-        let request = BGAppRefreshTaskRequest(identifier: "com.yourapp.refreshWidget")
+        let request = BGAppRefreshTaskRequest(identifier: "com.Jun.GitFarm.refreshWidget")
         request.earliestBeginDate = Date(timeIntervalSinceNow: 15 * 60) // 15 minutes from now
         
         do {

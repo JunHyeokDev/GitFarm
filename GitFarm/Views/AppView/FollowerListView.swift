@@ -31,28 +31,18 @@ struct FollowerListView: View {
             ScrollView {
                 LazyVGrid(columns: [GridItem(.adaptive(minimum: 100))], spacing: 20) {
                     ForEach(filteredFollowers, id: \.id) { follower in
-                        VStack {
-                            AsyncImage(url: URL(string: follower.avatarURL ?? "")) { image in
-                                image
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fill)
-                                    .frame(width: 80, height: 80)
-                                    .clipShape(Circle())
-                            } placeholder: {
-                                ProgressView()
+                        FollowerCell(follower: follower)
+                            .transition(.scale.combined(with: .opacity))
+                            .onTapGesture {
+                                selectedFollower = follower
                             }
-                            Text(follower.login ?? "")
-                                .foregroundStyle(Color.accent)
-                                .font(.caption)
-                                .lineLimit(1)
-                        }
-                        .transition(.scale.combined(with: .opacity))
-                        .onTapGesture {
-                            selectedFollower = follower
-                        }
                     }
                 }
                 .padding()
+            }
+            
+            if viewModel.isLoading {
+                ProgressView()
             }
         }
         .navigationTitle("Followers")
