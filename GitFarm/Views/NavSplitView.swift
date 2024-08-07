@@ -29,7 +29,7 @@ struct NavSplitView: View {
                 Sidebar(selection: $selection)
                     .background(Color.theme.background)
             }
-            .background(Color(UIColor.systemBackground))
+            .background(Color.theme.background)
         } detail: {
             NavigationStack(path: $path) {
                 DetailView(selection: $selection, commitHistoryViewModel: commitHistoryViewModel, userDataViewModel: userDataViewModel)

@@ -85,63 +85,12 @@ struct GitFarmWidgetEntryView : View {
         VStack {
             Button(intent: RefreshWidgetIntent()) {
                 Color.clear
-                    .frame(width: 30, height: 30)
-                
+                    .frame(width: 60, height: 40)
             }
             .buttonStyle(.plain) // 버튼이 사라지는 마법!!
             .position(x: geometry.size.width / 2, y: 9)
             
             Spacer()
         }
-    }
-}
-
-
-struct GIFImage: UIViewRepresentable {
-    private let name: String
-
-    init(_ name: String) {
-        self.name = name
-    }
-
-    func makeUIView(context: Context) -> UIImageView {
-        let imageView = UIImageView()
-        if let path = Bundle.main.path(forResource: name, ofType: "gif") {
-            let url = URL(fileURLWithPath: path)
-            imageView.loadGif(url: url)
-        }
-        return imageView
-    }
-
-    func updateUIView(_ uiView: UIImageView, context: Context) {}
-}
-
-extension UIImageView {
-    func loadGif(url: URL) {
-        DispatchQueue.global().async {
-            if let imageData = try? Data(contentsOf: url) {
-                DispatchQueue.main.async {
-                    self.animate(withGIFData: imageData)
-                }
-            }
-        }
-    }
-
-    private func animate(withGIFData data: Data) {
-        guard let source = CGImageSourceCreateWithData(data as CFData, nil) else { return }
-        
-        var images = [UIImage]()
-        let imageCount = CGImageSourceGetCount(source)
-        
-        for i in 0 ..< imageCount {
-            if let image = CGImageSourceCreateImageAtIndex(source, i, nil) {
-                images.append(UIImage(cgImage: image))
-            }
-        }
-        
-        self.animationImages = images
-        self.animationDuration = Double(imageCount) * 0.1
-        self.animationRepeatCount = 0 // 0 means infinite
-        self.startAnimating()
     }
 }

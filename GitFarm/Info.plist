@@ -11,7 +11,7 @@
 			<string>com.Jun.GitFarm</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>GitFarm</string>
+				<string>gitfarm</string>
 			</array>
 		</dict>
 	</array>
@@ -21,6 +21,13 @@
 		<string>processing</string>
 	</array>
 	<key>BGTaskSchedulerPermittedIdentifiers</key>
-	<array/>
+	<array>
+		<string>com.Jun.GitFarm.refreshWidget</string>
+	</array>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
+	</dict>
 </dict>
 </plist>

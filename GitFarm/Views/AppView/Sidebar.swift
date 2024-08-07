@@ -40,6 +40,7 @@ struct CustomNavigationLink: View {
     let color: Color
     let panel: Panel
     @Binding var selection: Panel?
+    @Environment(\.colorScheme) var colorScheme  // 현재 색상 스키마를 가져옵니다.
     
     var body: some View {
         NavigationLink(value: panel) {
@@ -52,11 +53,10 @@ struct CustomNavigationLink: View {
                 
                 Text(title)
                     .font(.custom("Avenir-Medium", size: 18))
-                    .foregroundColor(Color.theme.secondaryText)
+                    .foregroundColor(Color.theme.accent)
             }
             .padding(.vertical, 4)
         }
-        .listRowBackground(selection == panel ? Color.theme.accent.opacity(0.2) : Color.clear) // 선택된 경우 배경 색상 변경
     }
 }
 

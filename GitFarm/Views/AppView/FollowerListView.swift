@@ -43,6 +43,7 @@ struct FollowerListView: View {
             
             if viewModel.isLoading {
                 ProgressView()
+                    .frame(width: 50, height: 50)
             }
         }
         .navigationTitle("Followers")
@@ -52,6 +53,10 @@ struct FollowerListView: View {
         .animation(.spring(), value: filteredFollowers)
         .sheet(item: $selectedFollower) { follower in
             FollowerView(username: follower.login ?? "")
+            #if os(macOS)
+                .frame(width: 600, height: 600)
+            #endif
+            
         }
     }
 }

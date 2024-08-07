@@ -12,14 +12,28 @@ struct FollowerCell: View {
     
     var body: some View {
         VStack {
-            AsyncImage(url: URL(string: follower.avatarURL ?? "")) { image in
-                image
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
-                    .frame(width: 80, height: 80)
-                    .clipShape(Circle())
-            } placeholder: {
-                ProgressView()
+            AsyncImage(url: URL(string: follower.avatarURL ?? "")) { phase in
+                switch phase {
+                case .empty:
+                    Color.gray
+                        .frame(width: 80, height: 80)
+                        .clipShape(Circle())
+                case .success(let image):
+                    image
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                        .frame(width: 80, height: 80)
+                        .clipShape(Circle())
+                case .failure:
+                    Image(systemName: "person.circle.fill")
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                        .frame(width: 80, height: 80)
+                        .clipShape(Circle())
+                        .foregroundColor(.gray)
+                @unknown default:
+                    EmptyView()
+                }
             }
             Text(follower.login ?? "")
                 .foregroundStyle(Color.accent)

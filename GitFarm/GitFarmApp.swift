@@ -6,14 +6,26 @@
 //
 
 import SwiftUI
+#if os(iOS)
 import BackgroundTasks
+#endif
+
+#if os(macOS)
+import AppKit
+#endif
 
 @main
 struct GitFarmApp: App {
     @StateObject private var appCoordinator = AppCoordinator()
     
+    #if os(macOS)
+        @NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
+    #endif
+    
     init() {
+        #if os(iOS)
         registerBackgroundTasks()
+        #endif
     }
     
     var body: some Scene {
@@ -21,15 +33,18 @@ struct GitFarmApp: App {
             ContentView()
                 .environmentObject(appCoordinator)
                 .environmentObject(appCoordinator.loginManager)
+                #if os(iOS)
                 .onOpenURL { url in
                     appCoordinator.loginManager.handleCallback(url: url)
                 }
+                #endif
         }
         #if os(macOS)
-        .defaultSize(width: 1000, height: 650)
+        .handlesExternalEvents(matching: ["*"])
         #endif
     }
     
+    #if os(iOS)
     func registerBackgroundTasks() {
         BGTaskScheduler.shared.register(forTaskWithIdentifier: "com.Jun.GitFarm.refreshWidget", using: nil) { task in
             self.handleAppRefresh(task: task as! BGAppRefreshTask)
@@ -59,23 +74,42 @@ struct GitFarmApp: App {
             print("Could not schedule app refresh: \(error)")
         }
     }
-    
-//    func performBackgroundDataRefresh() async {
-//        // Implement the background refresh logic here
-//        await appCoordinator.refreshDataInBackground()
-//        scheduleNextRefresh()
-//    }
-//
-//    func scheduleNextRefresh() {
-//        let request = BGAppRefreshTaskRequest(identifier: "com.GitFarm.refreshData")
-//        request.earliestBeginDate = Date(timeIntervalSinceNow: 6 * 60 * 60) // 6 hours from now
-//        
-//        do {
-//            try BGTaskScheduler.shared.submit(request)
-//        } catch {
-//            print("Could not schedule app refresh: \(error)")
-//        }
-//    }
-
+    #endif
 }
+
+
+// MARK: - App delegate for MacOS
+
+#if os(macOS)
+import AppKit
+
+class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
+    @Environment(\.openURL) var openURL
+    
+    func application(_ application: NSApplication, open urls: [URL]) {
+        if let url = urls.first {
+            LoginManager.shared.handleCallback(url: url)
+        }
+    }
+    
+    private func application(_ application: NSApplication, handleOpen url: URL) -> Bool {
+        LoginManager.shared.handleCallback(url: url)
+        return true
+    }
+    
+    func applicationDidFinishLaunching(_ notification: Notification) {
+        if let window = NSApplication.shared.windows.first {
+            window.delegate = self
+            window.styleMask.remove(.resizable)
+            window.setContentSize(NSSize(width: 1000, height: 650))
+            window.minSize = NSSize(width: 1000, height: 650)
+            window.maxSize = NSSize(width: 1000, height: 650)
+        }
+    }
+    
+    func windowWillResize(_ sender: NSWindow, to frameSize: NSSize) -> NSSize {
+        return NSSize(width: 1000, height: 650)
+    }
+}
+#endif
 
