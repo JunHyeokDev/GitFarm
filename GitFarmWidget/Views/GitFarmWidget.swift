@@ -110,13 +110,39 @@ struct GitFarmWidget: Widget {
             GitFarmWidgetEntryView(entry: entry)
                 .containerBackground(.fill.tertiary, for: .widget)
         }
+        .configurationDisplayName("Git Farm Widget")
+        .description("Track your GitHub activity")
+        .supportedFamilies([.systemSmall, .systemMedium, .systemLarge, .accessoryRectangular])
+        .contentMarginsDisabled()
     }
+
 }
+
+
 
 extension ConfigurationAppIntent {
     fileprivate static var defaultNumber: ConfigurationAppIntent {
         let intent = ConfigurationAppIntent()
         intent.numberOfColumns = 17
         return intent
+    }
+}
+
+extension GitFarmWidget {
+
+    // Function to get a specific description based on WidgetFamily
+    private func description(for family: WidgetFamily) -> String {
+        switch family {
+        case .systemSmall:
+            return "I'm a Minimalist 🐥"
+        case .systemMedium:
+            return "I like Medium size! 💼"
+        case .systemLarge:
+            return "Bigger display, bigger achievements! 👨‍💻"
+        case .accessoryRectangular:
+            return "Your GitHub contributions at a glance"
+        @unknown default:
+            return "Track your GitHub activity" // Default description
+        }
     }
 }

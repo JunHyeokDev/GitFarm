@@ -8,6 +8,13 @@
 import SwiftUI
 import Combine
 
+#if canImport(UIKit)
+import UIKit
+#elseif canImport(AppKit)
+import AppKit
+#endif
+
+
 class LoginManager: ObservableObject {
     static let shared = LoginManager()
     private init() {}
@@ -61,9 +68,15 @@ class LoginManager: ObservableObject {
     func requestCodeToGitHub() {
         let scope = "repo,user"
         let urlString = "https://github.com/login/oauth/authorize?client_id=\(client_id)&scope=\(scope)"
-        if let url = URL(string: urlString), UIApplication.shared.canOpenURL(url) {
+        guard let url = URL(string: urlString) else { return }
+
+        #if os(iOS)
+        if UIApplication.shared.canOpenURL(url) {
             UIApplication.shared.open(url)
         }
+        #elseif os(macOS)
+        NSWorkspace.shared.open(url)
+        #endif
     }
     
     func requestAccessTokenToGithub(with code: String) -> AnyPublisher<String, Error> {
@@ -88,6 +101,13 @@ class LoginManager: ObservableObject {
         
         return URLSession.shared.dataTaskPublisher(for: request)
             .tryMap { data, response -> Data in
+                print("Response: \(response)")
+                if let httpResponse = response as? HTTPURLResponse {
+                    print("Status code: \(httpResponse.statusCode)")
+                    print("Headers: \(httpResponse.allHeaderFields)")
+                }
+                print("Received data: \(String(data: data, encoding: .utf8) ?? "Unable to decode data")")
+                
                 guard let httpResponse = response as? HTTPURLResponse,
                       200...299 ~= httpResponse.statusCode else {
                     throw URLError(.badServerResponse)
@@ -144,6 +164,7 @@ class LoginManager: ObservableObject {
                 receiveCompletion: { completion in
                     if case .failure(let error) = completion {
                         print("Error: \(error.localizedDescription)")
+                        print("Error : \(error)")
                         print("requestAccessTokenToGithub")
                     }
                 },

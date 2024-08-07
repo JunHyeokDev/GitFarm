@@ -15,7 +15,7 @@ struct ContentView: View {
             Group {
                 switch appCoordinator.appState {
                 case .loading:
-                    LoadingView(message: "Setting up your Git farm...")
+                    LoadingView()
                 case .login:
                     LoginView()
                         .transition(.asymmetric(insertion: .move(edge: .bottom).combined(with: .opacity),

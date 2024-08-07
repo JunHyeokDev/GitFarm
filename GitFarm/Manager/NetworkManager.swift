@@ -157,6 +157,7 @@ class NetworkManager {
     }
     
     func getFollowers(for username: String, page: Int) -> AnyPublisher<[Follower],Error> {
+        print("GetFollowers Start")
         let endpoint = _baseURL + "/users/\(username)/followers?per_page=\(_followersPerPage)&page=\(page)"
         let decoder = JSONDecoder()
         decoder.dateDecodingStrategy = .iso8601

@@ -6,6 +6,11 @@
 //
 
 import SwiftUI
+#if os(iOS)
+import UIKit
+#elseif os(macOS)
+import AppKit
+#endif
 
 struct FollowerView: View {
     let username: String
@@ -47,9 +52,13 @@ struct FollowerView: View {
                 .animation(.easeInOut(duration: 0.5), value: isDataReady)
             }
         }
-        .navigationBarItems(trailing: Button("Done") {
-            presentationMode.wrappedValue.dismiss()
-        })
+        .toolbar {
+            ToolbarItem(placement: .confirmationAction) {
+                Button("Done") {
+                    presentationMode.wrappedValue.dismiss()
+                }
+            }
+        }
         .task {
             await viewModel.loadUserData(username: username)
             checkDataReadiness()
@@ -60,12 +69,6 @@ struct FollowerView: View {
         .onChange(of: viewModel.commitStats) { _ in
             checkDataReadiness()
         }
-//        .alert(item: Binding<AlertItem?>(
-//            get: { viewModel.error.map { AlertItem(message: $0.localizedDescription) } },
-//            set: { _ in viewModel.error = nil }
-//        )) { alertItem in
-//            Alert(title: Text("Error"), message: Text(alertItem.message))
-//        }
     }
     
     private func checkDataReadiness() {
@@ -136,15 +139,17 @@ struct FollowUserInfoView: View {
                     statView(title: "Following", count: user.following)
                 }
                 Button {
-                    // Action for "Get Followers" button
+                    openURL(user.htmlUrl)
                 } label: {
-                    Text("Get Followers")
+                    Text("Check GitHub Profile")
                         .frame(maxWidth: .infinity)
                         .padding()
                         .background(Color.green)
                         .foregroundStyle(Color.accent)
                         .cornerRadius(10)
                 }
+                .buttonStyle(PlainButtonStyle()) // 이 줄을 추가합니다
+                .padding(.horizontal, -15) // 이 줄을 추가합니다
             }
             .padding()
             .background(Color.accentColor.opacity(0.05))
@@ -178,22 +183,17 @@ struct RepositoryStatsView: View {
             }
             
             Button {
-                if let url = URL(string: user.htmlUrl), UIApplication.shared.canOpenURL(url) {
-                    let options: [UIApplication.OpenExternalURLOptionsKey: Any] = [
-                        .universalLinksOnly: false
-                    ]
-                    UIApplication.shared.open(url, options: options)
-                } else {
-                    print("Failed to open the GitHub link")
-                }
+                openURL("\(user.htmlUrl)?tab=repositories")
             } label: {
-                Text("Check GitHub Profile")
+                Text("Check GitHub Repository")
                     .frame(maxWidth: .infinity)
                     .padding()
                     .background(Color.purple)
                     .foregroundStyle(Color.accent)
                     .cornerRadius(10)
             }
+            .buttonStyle(PlainButtonStyle()) // 이 줄을 추가합니다
+            .padding(.horizontal, -15) // 이 줄을 추가합니다
         }
         .padding()
         .background(colorScheme == .dark ? Color.secondary.opacity(0.2) : Color.secondary.opacity(0.1))
@@ -211,9 +211,28 @@ struct RepositoryStatsView: View {
                 .fontWeight(.bold)
         }
     }
+    
+
 }
 
 struct AlertItem: Identifiable {
     let id = UUID()
     let message: String
+}
+
+private func openURL(_ urlString: String) {
+    guard let url = URL(string: urlString) else {
+        print("Invalid URL")
+        return
+    }
+    
+    #if os(iOS)
+    if UIApplication.shared.canOpenURL(url) {
+        UIApplication.shared.open(url, options: [:])
+    } else {
+        print("Failed to open the GitHub link")
+    }
+    #elseif os(macOS)
+    NSWorkspace.shared.open(url)
+    #endif
 }

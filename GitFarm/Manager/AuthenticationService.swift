@@ -8,6 +8,13 @@
 import SwiftUI
 import Combine
 
+#if canImport(UIKit)
+import UIKit
+#elseif canImport(AppKit)
+import AppKit
+#endif
+
+
 class AuthenticationService {
     static let shared = AuthenticationService()
     private init() {}
@@ -46,9 +53,15 @@ class AuthenticationService {
     func requestCodeToGitHub() {
         let scope = "repo,user"
         let urlString = "https://github.com/login/oauth/authorize?client_id=\(clientId)&scope=\(scope)"
-        if let url = URL(string: urlString), UIApplication.shared.canOpenURL(url) {
+        guard let url = URL(string: urlString) else { return }
+        
+        #if os(iOS) || os(tvOS)
+        if UIApplication.shared.canOpenURL(url) {
             UIApplication.shared.open(url)
         }
+        #elseif os(macOS)
+        NSWorkspace.shared.open(url)
+        #endif
     }
     
     func requestAccessTokenToGithub(with code: String) -> AnyPublisher<String, Error> {
