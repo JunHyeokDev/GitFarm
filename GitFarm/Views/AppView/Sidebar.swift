@@ -15,6 +15,7 @@ enum Panel: Hashable {
 
 struct Sidebar: View {
     @Binding var selection: Panel?
+    @Environment(\.colorScheme) var colorScheme
     
     var body: some View {
         List(selection: $selection) {
@@ -28,6 +29,8 @@ struct Sidebar: View {
             }
         }
         .listStyle(SidebarListStyle())
+        .background(Color.clear) // 리스트 배경을 투명하게 설정
+        .scrollContentBackground(.hidden) // iOS 16 이상에서 스크롤 컨텐츠 배경 숨기기
         #if os(macOS)
         .navigationSplitViewColumnWidth(min: 200, ideal: 200)
         #endif
@@ -40,7 +43,7 @@ struct CustomNavigationLink: View {
     let color: Color
     let panel: Panel
     @Binding var selection: Panel?
-    @Environment(\.colorScheme) var colorScheme  // 현재 색상 스키마를 가져옵니다.
+    @Environment(\.colorScheme) var colorScheme
     
     var body: some View {
         NavigationLink(value: panel) {
@@ -57,8 +60,10 @@ struct CustomNavigationLink: View {
             }
             .padding(.vertical, 4)
         }
+        .listRowBackground(Color.clear) // 각 행의 배경을 투명하게 설정
     }
 }
+
 
 struct CustomSectionHeader: View {
     let title: String

@@ -7,6 +7,7 @@
 	<key>com.apple.security.application-groups</key>
 	<array>
 		<string>group.com.Jun.GitFarm.FarmWidget</string>
+		<string>group.com.Jun.GitFarm</string>
 	</array>
 	<key>com.apple.security.files.user-selected.read-only</key>
 	<true/>

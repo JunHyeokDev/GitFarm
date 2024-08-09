@@ -23,13 +23,19 @@ class AppInitViewModel: ObservableObject {
     }
     
     func initialize() {
-        loginManager.checkLoginStatus()
-        
-        if loginManager.isLoggedIn, let user = loginManager.currentUser {
+//        loginManager.checkLoginStatus()
+//        
+//        if loginManager.isLoggedIn, let user = loginManager.currentUser {
+//            Task {
+//                await fetchUserData(for: user.login)
+//            }
+//        } else {
+//            isInitialized = true
+//        }
+        if let user = loginManager.currentUser {
             Task {
                 await fetchUserData(for: user.login)
             }
-        } else {
             isInitialized = true
         }
     }
