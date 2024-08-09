@@ -8,7 +8,7 @@
 import Foundation
 
 extension CGFloat {
-    // 태양과 겹치지 않는 랜덤 X 오프셋 생성 함수 (확장)
+    // 태양과 겹치지 않는 랜덤 X 오프셋 생성 함수
     public static func generateRandomXOffset(range: ClosedRange<CGFloat>, sunCenterX: CGFloat, safeRadius: CGFloat) -> CGFloat {
         var offsetX = CGFloat.random(in: range)
         while abs(offsetX - sunCenterX) < safeRadius {

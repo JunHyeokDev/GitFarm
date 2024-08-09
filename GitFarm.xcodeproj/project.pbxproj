@@ -11,6 +11,7 @@
 		BF0900FB2C52AB4F00F18975 /* LoginManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0900FA2C52AB4F00F18975 /* LoginManager.swift */; };
 		BF0900FE2C52ABDE00F18975 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF0900FD2C52ABDE00F18975 /* User.swift */; };
 		BF47CB1C2C5E47D000058578 /* CommitStatisticsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF6CFB102C5CC57500EE06C4 /* CommitStatisticsView.swift */; };
+		BF556CF62C648E2B002C6052 /* GradientBackgroundModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF556CF52C648E2B002C6052 /* GradientBackgroundModifier.swift */; };
 		BF59EB692C53EB5200B3F51B /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF59EB682C53EB5200B3F51B /* NetworkManager.swift */; };
 		BF59EB6B2C53EB8600B3F51B /* CommitHistory.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF59EB6A2C53EB8600B3F51B /* CommitHistory.swift */; };
 		BF59EB6E2C53EEA000B3F51B /* CommitHistoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF59EB6D2C53EEA000B3F51B /* CommitHistoryViewModel.swift */; };
@@ -66,6 +67,8 @@
 		BF6CFB182C5E266200EE06C4 /* UserDataViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF6CFB142C5E21A500EE06C4 /* UserDataViewModel.swift */; };
 		BF6CFB192C5E266D00EE06C4 /* Sidebar.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFE082432C5A28F600FA1FE0 /* Sidebar.swift */; };
 		BF6CFB1D2C5E26AE00EE06C4 /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF6209002C5B9C5A007ED93D /* SearchBar.swift */; };
+		BF73417D2C65E7BD0051C09A /* URLImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF73417C2C65E7BD0051C09A /* URLImageView.swift */; };
+		BF73417E2C65E9AD0051C09A /* URLImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF73417C2C65E7BD0051C09A /* URLImageView.swift */; };
 		BF862D4B2C630950007A1DA6 /* FollowerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF862D4A2C630950007A1DA6 /* FollowerCell.swift */; };
 		BF862D4E2C631D0B007A1DA6 /* HowToUseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF862D4D2C631D0B007A1DA6 /* HowToUseView.swift */; };
 		BF8B57232C5BA708009FE90F /* FollowerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8B57222C5BA708009FE90F /* FollowerView.swift */; };
@@ -134,6 +137,7 @@
 		BF0900F72C529FE100F18975 /* NavSplitView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavSplitView.swift; sourceTree = "<group>"; };
 		BF0900FA2C52AB4F00F18975 /* LoginManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginManager.swift; sourceTree = "<group>"; };
 		BF0900FD2C52ABDE00F18975 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		BF556CF52C648E2B002C6052 /* GradientBackgroundModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientBackgroundModifier.swift; sourceTree = "<group>"; };
 		BF59EB672C53E8F300B3F51B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		BF59EB682C53EB5200B3F51B /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		BF59EB6A2C53EB8600B3F51B /* CommitHistory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommitHistory.swift; sourceTree = "<group>"; };
@@ -171,6 +175,7 @@
 		BF6CFB102C5CC57500EE06C4 /* CommitStatisticsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommitStatisticsView.swift; sourceTree = "<group>"; };
 		BF6CFB122C5E123900EE06C4 /* PersistanceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistanceManager.swift; sourceTree = "<group>"; };
 		BF6CFB142C5E21A500EE06C4 /* UserDataViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDataViewModel.swift; sourceTree = "<group>"; };
+		BF73417C2C65E7BD0051C09A /* URLImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLImageView.swift; sourceTree = "<group>"; };
 		BF862D4A2C630950007A1DA6 /* FollowerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowerCell.swift; sourceTree = "<group>"; };
 		BF862D4D2C631D0B007A1DA6 /* HowToUseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HowToUseView.swift; sourceTree = "<group>"; };
 		BF8B57222C5BA708009FE90F /* FollowerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowerView.swift; sourceTree = "<group>"; };
@@ -254,6 +259,14 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
+		BF556CF42C648E1A002C6052 /* ViewModifier */ = {
+			isa = PBXGroup;
+			children = (
+				BF556CF52C648E2B002C6052 /* GradientBackgroundModifier.swift */,
+			);
+			path = ViewModifier;
+			sourceTree = "<group>";
+		};
 		BF59EB6C2C53EE4400B3F51B /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
@@ -290,6 +303,7 @@
 				BF63842E2C5A165D0025FBA8 /* HeaderView.swift */,
 				BF0900F72C529FE100F18975 /* NavSplitView.swift */,
 				BFC5630B2C529ABA00CE79CB /* ContentView.swift */,
+				BF73417C2C65E7BD0051C09A /* URLImageView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -377,6 +391,7 @@
 				BF68BF4D2C56345D00263F63 /* Config.swift */,
 				BF68BF472C561CDB00263F63 /* AppState.swift */,
 				BF59EB672C53E8F300B3F51B /* Info.plist */,
+				BF556CF42C648E1A002C6052 /* ViewModifier */,
 				BF59EB6C2C53EE4400B3F51B /* ViewModel */,
 				BF0900FC2C52ABCA00F18975 /* Model */,
 				BF0900F92C52AB2C00F18975 /* Manager */,
@@ -614,6 +629,7 @@
 				BF6CFB0F2C5CBDF100EE06C4 /* FollowerViewModel.swift in Sources */,
 				BF6CFB1D2C5E26AE00EE06C4 /* SearchBar.swift in Sources */,
 				BF5E27462C58A6AD009E31C4 /* Config.swift in Sources */,
+				BF73417E2C65E9AD0051C09A /* URLImageView.swift in Sources */,
 				BF5E273D2C589456009E31C4 /* GitFarmWidgetEntryView.swift in Sources */,
 				BF5E274F2C58AB7C009E31C4 /* GitCommitHistoryView.swift in Sources */,
 				BF5E27522C58ABFE009E31C4 /* NetworkManager.swift in Sources */,
@@ -636,6 +652,7 @@
 				BFC5630A2C529ABA00CE79CB /* GitFarm.xcdatamodeld in Sources */,
 				BFC5630C2C529ABA00CE79CB /* ContentView.swift in Sources */,
 				BF6209012C5B9C5B007ED93D /* SearchBar.swift in Sources */,
+				BF73417D2C65E7BD0051C09A /* URLImageView.swift in Sources */,
 				BF0900F82C529FE100F18975 /* NavSplitView.swift in Sources */,
 				BF59EB862C53F5B700B3F51B /* AppInitViewModel.swift in Sources */,
 				BFE0824A2C5A50EF00FA1FE0 /* String+Ext.swift in Sources */,
@@ -650,6 +667,7 @@
 				BF59EB712C53EEC900B3F51B /* Array+Ext.swift in Sources */,
 				BF68BF522C56511200263F63 /* AppCoordinator.swift in Sources */,
 				BF59EB692C53EB5200B3F51B /* NetworkManager.swift in Sources */,
+				BF556CF62C648E2B002C6052 /* GradientBackgroundModifier.swift in Sources */,
 				BFE082462C5A2CC200FA1FE0 /* DetailView.swift in Sources */,
 				BFC563072C529ABA00CE79CB /* Persistence.swift in Sources */,
 				BFE0824D2C5A561D00FA1FE0 /* FollowerListView.swift in Sources */,
@@ -793,6 +811,7 @@
 		BFC563292C529ABD00CE79CB /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALLOW_TARGET_PLATFORM_SPECIALIZATION = YES;
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -848,6 +867,8 @@
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				SUPPORTED_PLATFORMS = macosx;
+				SUPPORTS_MACCATALYST = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -856,6 +877,7 @@
 		BFC5632A2C529ABD00CE79CB /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALLOW_TARGET_PLATFORM_SPECIALIZATION = YES;
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -904,6 +926,9 @@
 				MACOSX_DEPLOYMENT_TARGET = 13.3;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = NO;
+				SUPPORTED_PLATFORMS = macosx;
+				SUPPORTS_MACCATALYST = YES;
 				SWIFT_COMPILATION_MODE = wholemodule;
 			};
 			name = Release;

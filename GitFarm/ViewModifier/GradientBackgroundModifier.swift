@@ -7,12 +7,20 @@
 
 import SwiftUI
 
-struct GradientBackgroundModifier: View {
-    var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+struct GradientBackgroundModifier: ViewModifier {
+    func body(content: Content) -> some View {
+        ZStack {
+            LinearGradient(gradient: Gradient(colors: [Color.green.opacity(0.3), Color.blue.opacity(0.3)]),
+                           startPoint: .topLeading,
+                           endPoint: .bottomTrailing)
+                .edgesIgnoringSafeArea(.all)
+            content
+        }
     }
 }
 
-#Preview {
-    GradientBackgroundModifier()
+extension View {
+    func gradientBackground() -> some View {
+        self.modifier(GradientBackgroundModifier())
+    }
 }

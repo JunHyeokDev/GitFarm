@@ -112,7 +112,7 @@ struct GitFarmWidget: Widget {
         }
         .configurationDisplayName("Git Farm Widget")
         .description("Track your GitHub activity")
-        .supportedFamilies([.systemSmall, .systemMedium, .systemLarge, .accessoryRectangular])
+        .supportedFamilies([.systemSmall, .systemMedium, .systemLarge])
         .contentMarginsDisabled()
     }
 
@@ -141,7 +141,7 @@ extension GitFarmWidget {
             return "Bigger display, bigger achievements! 👨‍💻"
         case .accessoryRectangular:
             return "Your GitHub contributions at a glance"
-        @unknown default:
+        default:
             return "Track your GitHub activity" // Default description
         }
     }

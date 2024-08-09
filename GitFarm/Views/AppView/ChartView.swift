@@ -17,17 +17,7 @@ struct ChartView: View {
     var body: some View {
         VStack(alignment : .leading) {
             HStack {
-                if let avatarUrl = viewModel.user?.avatarUrl {
-                    AsyncImage(url: URL(string: avatarUrl)) { image in
-                        image
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 50, height: 50)
-                            .clipShape(Circle())
-                    } placeholder: {
-                        ProgressView()
-                    }
-                }
+                URLImageView(urlString: viewModel.user?.avatarUrl ?? "", width: 60, height: 60)
                 
                 VStack(alignment: .leading, spacing: 3) {
                     if let ghID = viewModel.user?.login {
@@ -99,6 +89,7 @@ struct ChartView: View {
             }
             .padding()
         }
+        .gradientBackground()
         .navigationTitle("Commit Activity")
     }
     

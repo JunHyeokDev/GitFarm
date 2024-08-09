@@ -69,10 +69,13 @@ struct GitFarmWidgetEntryView : View {
             switch widgetFamily {
             case .systemSmall:
                 GitCommitHistoryView2(commitHistories: commitHistories, user: user, columns: entry.configuration.numberOfColumns)
+                    .padding()
             case .systemMedium:
                 GitCommitHistoryView2(commitHistories: commitHistories, user: user, columns: entry.configuration.numberOfColumns)
+                    .padding()
             case .systemLarge:
                 GitCommitHistoryView(commitHistories: commitHistories, user: user, columns: entry.configuration.numberOfColumns, commitTimeStatistics: entry.commitTimeline)
+                    .padding()
             case .accessoryRectangular:
                 GitCommitHistoryView(commitHistories: commitHistories, user: user, columns: entry.configuration.numberOfColumns, commitTimeStatistics: entry.commitTimeline)
             default:

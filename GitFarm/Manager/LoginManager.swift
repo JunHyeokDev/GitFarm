@@ -36,6 +36,22 @@ class LoginManager: ObservableObject {
             currentUser = getLoggedInUser()
         }
     }
+    
+    func logout() {
+        userDefaults.removeObject(forKey: loggedInKey)
+        userDefaults.removeObject(forKey: userKey)
+        isLoggedIn = false
+        currentUser = nil
+        
+        // Widget 관련 데이터 삭제
+        if let userDefaults = UserDefaults(suiteName: "group.com.Jun.GitFarm.FarmWidget") {
+            userDefaults.removeObject(forKey: "commitTimeline")
+            userDefaults.removeObject(forKey: "commitHistories")
+            userDefaults.removeObject(forKey: "userInfoVM")
+        }
+        
+        NotificationCenter.default.post(name: .userLoggedOut, object: nil)
+    }
 
     let userSubject = PassthroughSubject<User, Never>()
     
@@ -57,11 +73,6 @@ class LoginManager: ObservableObject {
         isLoggedIn = true
         currentUser = user
         NotificationCenter.default.post(name: .userLoggedIn, object: nil)
-    }
-    
-    func logout() {
-        userDefaults.removeObject(forKey: loggedInKey)
-        userDefaults.removeObject(forKey: userKey)
     }
     
     
@@ -190,4 +201,5 @@ struct AccessTokenResponse: Codable {
 // MARK: - Notification
 extension Notification.Name {
     static let userLoggedIn = Notification.Name("userLoggedIn")
+    static let userLoggedOut = Notification.Name("userLoggedOut")
 }

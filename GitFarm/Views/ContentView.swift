@@ -12,6 +12,12 @@ struct ContentView: View {
     
     var body: some View {
         ZStack {
+            // 그레디언트 컬러 설정.
+            LinearGradient(gradient: Gradient(colors: [Color.green.opacity(0.3), Color.blue.opacity(0.3)]),
+                           startPoint: .topLeading,
+                           endPoint: .bottomTrailing)
+                .edgesIgnoringSafeArea(.all)
+            
             Group {
                 switch appCoordinator.appState {
                 case .loading:
@@ -28,6 +34,7 @@ struct ContentView: View {
                             .environmentObject(userDataViewModel)
                             .transition(.asymmetric(insertion: .move(edge: .trailing).combined(with: .opacity),
                                                     removal: .move(edge: .leading).combined(with: .opacity)))
+                            .gradientBackground()
                     } else {
                         LoadingView(message: "Preparing your data...")
                     }

@@ -14,6 +14,7 @@ public struct User: Codable, Identifiable, Equatable {
     let name: String?
     let location: String?
     let bio: String?
+    let company: String?
     let publicRepos: Int
     let publicGists: Int
     let htmlUrl: String
@@ -30,6 +31,7 @@ extension User {
         name: nil,
         location: nil,
         bio: nil,
+        company: "No Company info yet! 😅",
         publicRepos: 0,
         publicGists: 0,
         htmlUrl: "",
