@@ -13,6 +13,7 @@ class AppCoordinator: ObservableObject {
     @Published var appState: AppState = .loading
     @Published var userDataViewModel: UserDataViewModel?
     @Published var commitHistoryViewModel: CommitHistoryViewModel?
+    @Published var user : User?
     
     let loginManager: LoginManager
     private var cancellables: Set<AnyCancellable> = []
@@ -130,8 +131,13 @@ class AppCoordinator: ObservableObject {
         
         let commitHistoryVM = await CommitHistoryViewModel(with: user)
         self.commitHistoryViewModel = commitHistoryVM
-        
-        loginManager.currentUser = commitHistoryViewModel?.user
+        do {
+            let newUserinfo = try await NetworkManager.shared.getUserInfo(with: user.login)
+            commitHistoryViewModel?.user = newUserinfo
+        } catch {
+            print("Error refreshing user data: \(error)")
+            appState = .login
+        }
         
         await userDataVM.loadUserData(username: user.login)
         await commitHistoryVM.fetchCommitHistories(with: user.login)

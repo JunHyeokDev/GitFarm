@@ -30,7 +30,7 @@ struct URLImageView: View {
                 image
                     .resizable()
                     .aspectRatio(contentMode: .fill)
-                    .clipShape(Circle())
+                    .clipShape(RoundedRectangle(cornerRadius: 10))
                     .frame(width: width,height: height)
 
             case .failure:
