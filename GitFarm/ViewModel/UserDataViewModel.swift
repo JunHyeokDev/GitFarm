@@ -12,6 +12,7 @@ import Foundation
 class UserDataViewModel: ObservableObject {
     @Published var user: User?
     @Published var commitStats: CommitTimeStatistics?
+    @Published var commitHistories : [CommitHistory]?
     @Published var isLoading = false
     @Published var error: String?
     
@@ -22,9 +23,12 @@ class UserDataViewModel: ObservableObject {
         do {
             async let userInfo = NetworkManager.shared.getUserInfo(with: username)
             async let repositories = NetworkManager.shared.getRepositories(for: username)
+            async let commitHistories = NetworkManager.shared.fetchCommitHistories(with: username)
+        
             
-            let (user, repos) = try await (userInfo, repositories)
+            let (user, repos, commits) = try await (userInfo, repositories, commitHistories)
             self.user = user
+            self.commitHistories = commits
             
             try await loadCommits(for: repos, username: username)
         } catch {

@@ -54,9 +54,12 @@ struct FollowerListView: View {
         .sheet(item: $selectedFollower) { follower in
             FollowerView(username: follower.login ?? "")
             #if os(macOS)
-                .frame(width: 600, height: 600)
+                .frame(width: 400, height: 600)
+                .background( LinearGradient(
+                    gradient: Gradient(colors: [Color.mint.opacity(0.3), Color.blue.opacity(0.3)]),
+                    startPoint: .top,
+                    endPoint: .bottom ) )
             #endif
-            
         }
     }
 }
