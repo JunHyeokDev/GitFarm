@@ -50,7 +50,6 @@ struct LoadingView: View {
             }
             .frame(height: 40)
         }
-        .gradientBackground()
         .onAppear {
             withAnimation(Animation.easeInOut(duration: 1.5).repeatForever(autoreverses: true)) {
                 leafScale = 1.0

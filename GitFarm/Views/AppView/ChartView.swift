@@ -72,7 +72,7 @@ struct ChartView: View {
                         .font(.headline)
                     Text("\(totalCommits)")
                         .font(.title)
-                        .foregroundColor(.green)
+                        .foregroundColor(.orange)
                         .animation(.default, value: selectedPeriod)
 
                 }
@@ -82,15 +82,14 @@ struct ChartView: View {
                         .font(.headline)
                     Text(String(format: "%.1f", averageCommits))
                         .font(.title)
-                        .foregroundColor(.blue)
+                        .foregroundColor(.green)
                         .animation(.default, value: selectedPeriod)
 
                 }
             }
             .padding()
         }
-        .gradientBackground()
-        .navigationTitle("Commit Activity")
+        .navigationTitle("My Commit Statistics")
     }
     
     private var filteredCommitHistory: [CommitHistory] {

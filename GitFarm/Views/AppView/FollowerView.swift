@@ -34,14 +34,12 @@ struct FollowerView: View {
     var body: some View {
         GeometryReader { geometry in
             ZStack {
-                backgroundGradient
-                    .edgesIgnoringSafeArea(.all)
-                
-                if viewModel.isLoading || !isDataReady {
-                    FollowLoadingView()
-                } else {
+                 if viewModel.isLoading || !isDataReady {
+                     LoadingView(message: "Loading User Data! 📖")
+                 } else {
                     ScrollView {
                         VStack(spacing: 20) {
+                            
                             if let user = viewModel.user,
                                let stats = viewModel.commitStats,
                                let commitHistories = viewModel.commitHistories {
@@ -74,6 +72,8 @@ struct FollowerView: View {
                                         ("🧟","Coding Zombie", stats.night,Double(stats.night)/Double(stats.totalCommits)),
                                     ])
                                     .padding(.vertical, 10)
+                                    
+
                                 }
                                 .frame(width: geometry.size.width * 0.9)
                                 .background(colorScheme == .dark ? Color.secondary.opacity(0.3) : Color.secondary.opacity(0.1))
@@ -90,40 +90,10 @@ struct FollowerView: View {
                     .animation(.easeInOut(duration: 0.5), value: isDataReady)
                 }
             }
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+
         }
-        .padding(.vertical,10)
-        .toolbar {
-            ToolbarItem(placement: .confirmationAction) {
-                Button("Done") {
-                    presentationMode.wrappedValue.dismiss()
-                }
-                .buttonStyle(.borderedProminent)
-                .tint(Color.blue) // 색상 변경
-            }
-        }
-//        #if os(iOS)
-//                .toolbar {
-//                    ToolbarItem(placement: .confirmationAction) {
-//                        Button("Done") {
-//                            presentationMode.wrappedValue.dismiss()
-//                        }
-//                        .buttonStyle(.borderedProminent)
-//                        .tint(Color.blue)
-//                    }
-//                }
-//                .toolbarBackground(backgroundGradient, for: .navigationBar) // iOS/iPad에서 툴바 배경에 그라데이션 적용
-//        #elseif os(macOS)
-//                .toolbar {
-//                    ToolbarItem(placement: .confirmationAction) {
-//                        Button("Done") {
-//                            presentationMode.wrappedValue.dismiss()
-//                        }
-//                        .buttonStyle(.borderedProminent)
-//                        .tint(Color.blue)
-//                    }
-//                }
-//                .toolbarBackground(backgroundGradient, for: .windowToolbar) // macOS에서 툴바 배경에 그라데이션 적용
-//        #endif
+        .offset(y:30)
         .task {
             await viewModel.loadUserData(username: username)
             checkDataReadiness()
