@@ -13,18 +13,16 @@ import AppKit
 #endif
 
 struct FollowerView: View {
-    let username: String
-    
-    @Environment(\.colorScheme) var colorScheme
     @StateObject private var viewModel = UserDataViewModel()
+    @Environment(\.colorScheme) var colorScheme
     @Environment(\.presentationMode) var presentationMode
     
+    let username: String
     let columns = 17
     let rows = 7
     
     @State private var isDataReady = false
     
-    // 그라데이션 색상을 상수로 정의
     let backgroundGradient = LinearGradient(
         gradient: Gradient(colors: [Color.mint.opacity(0.3), Color.blue.opacity(0.3)]),
         startPoint: .top,
@@ -32,28 +30,26 @@ struct FollowerView: View {
     )
     
     var body: some View {
-        GeometryReader { geometry in
-            ZStack {
-                 if viewModel.isLoading || !isDataReady {
-                     LoadingView(message: "Loading User Data! 📖")
-                 } else {
-                    ScrollView {
-                        VStack(spacing: 20) {
-                            
-                            if let user = viewModel.user,
-                               let stats = viewModel.commitStats,
-                               let commitHistories = viewModel.commitHistories {
-                                FollowUserInfoView(user: user)
-                                    .frame(width: geometry.size.width * 0.9)
-                                
-                                RepositoryStatsView(user: user)
-                                    .frame(width: geometry.size.width * 0.9)
-                                
+        ZStack {
+            backgroundGradient.edgesIgnoringSafeArea(.all)
+            if viewModel.isLoading || !isDataReady {
+                LoadingView(message: "Loading User Data! 📖")
+            } else {
+                ScrollView {
+                    VStack(spacing: 10) {
+                        if let user = viewModel.user,
+                           let stats = viewModel.commitStats,
+                           let commitHistories = viewModel.commitHistories {
+                            FollowUserInfoView(user: user)
+                                .padding(.top, 25)
+                                .frame(width: 330)
+                            VStack {
                                 VStack(spacing: 15) {
                                     SkyView()
                                         .frame(height: 30)
+                                        .padding(.top, 6)
                                     
-                                    GitCommitView(columns: columns, rows: rows, size: CGSize(width: geometry.size.width * 0.9, height: 450)) { column, row in
+                                    GitCommitView(columns: columns, rows: rows, size: CGSize(width: 330, height: 450)) { column, row in
                                         Group {
                                             if let commitHistory = CommitHistoryViewModel.commitHistorySet(with: commitHistories, columnsCount: columns).element(at: row)?.element(at: column) {
                                                 GitCommitCellView(commitHistory: commitHistory)
@@ -63,37 +59,49 @@ struct FollowerView: View {
                                             }
                                         }
                                     }
-                                    .padding(.vertical, 10)
-                                    
+
                                     CommitStatisticsView(stats: [
                                         ("🐥","Early Bird", stats.morning,Double(stats.morning)/Double(stats.totalCommits)),
                                         ("🧑‍💻","Working hours", stats.afternoon,Double(stats.afternoon)/Double(stats.totalCommits)),
                                         ("🌙","Over work", stats.evening,Double(stats.evening)/Double(stats.totalCommits)),
                                         ("🧟","Coding Zombie", stats.night,Double(stats.night)/Double(stats.totalCommits)),
                                     ])
-                                    .padding(.vertical, 10)
-                                    
-
                                 }
-                                .frame(width: geometry.size.width * 0.9)
+                                .frame(width: 330)
+                                .padding()
                                 .background(colorScheme == .dark ? Color.secondary.opacity(0.3) : Color.secondary.opacity(0.1))
                                 .clipShape(RoundedRectangle(cornerRadius: 20))
                                 .shadow(color: Color.black.opacity(0.1), radius: 10, x: 0, y: 5)
-                            } else {
-                                Text("No user data available")
-                                    .foregroundStyle(Color.accent)
+                                
+                                Button(action: {
+                                    presentationMode.wrappedValue.dismiss()
+                                }) {
+                                    Text("Dismiss")
+                                        .frame(maxWidth: .infinity)
+                                        .padding()
+                                        .background(Color.red)
+                                        .foregroundColor(.white)
+                                        .cornerRadius(10)
+                                }
+                                .frame(width: 300)
+                                .buttonStyle(PlainButtonStyle())
+                                .padding()
+                                .padding(.bottom, 18)
                             }
+                            .padding(.top, 30)
+                        } else {
+                            Text("No user data available")
+                                .foregroundStyle(Color.accent)
                         }
-                        .frame(width: geometry.size.width)
                     }
-                    .transition(.opacity)
-                    .animation(.easeInOut(duration: 0.5), value: isDataReady)
+                    .frame(width: 375)
                 }
+                .transition(.opacity)
+                .animation(.easeInOut(duration: 0.5), value: isDataReady)
             }
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
-
         }
-        .offset(y:30)
+        
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
         .task {
             await viewModel.loadUserData(username: username)
             checkDataReadiness()
@@ -132,8 +140,8 @@ struct FollowUserInfoView: View {
     let user: User
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 30) {
-            HStack(spacing: 20) {
+        VStack(alignment: .leading, spacing: 7) {
+            HStack(spacing: 25) {
                 //Image
                 AsyncImage(url: URL(string: user.avatarUrl)) { image in
                     image
@@ -187,7 +195,30 @@ struct FollowUserInfoView: View {
             }
             .padding()
             .background(Color.accentColor.opacity(0.05))
-            //.background(Color.white.opacity(0.8))
+            .cornerRadius(15)
+            .shadow(color: Color.black.opacity(0.1), radius: 10, x: 0, y: 5)
+            
+            VStack(spacing: 15) {
+                HStack(spacing: 15) {
+                    statView(title: "Public Repos", count: user.publicRepos)
+                    Spacer()
+                    statView(title: "Public Gists", count: user.publicGists)
+                }
+                
+                Button {
+                    openURL("\(user.htmlUrl)?tab=repositories")
+                } label: {
+                    Text("Check GitHub Repository")
+                        .frame(maxWidth: .infinity)
+                        .padding()
+                        .background(Color.blue)
+                        .foregroundColor(.white)
+                        .cornerRadius(10)
+                }
+                .buttonStyle(PlainButtonStyle())
+            }
+            .padding()
+            .background(Color.accentColor.opacity(0.05))
             .cornerRadius(15)
             .shadow(color: Color.black.opacity(0.1), radius: 10, x: 0, y: 5)
         }
@@ -206,47 +237,25 @@ struct FollowUserInfoView: View {
     }
 }
 
-struct RepositoryStatsView: View {
-    let user: User
-    
-    var body: some View {
-        VStack(spacing: 15) {
-            HStack(spacing: 15) {
-                statView(title: "Public Repos", count: user.publicRepos)
-                Spacer()
-                statView(title: "Public Gists", count: user.publicGists)
-            }
-            
-            Button {
-                openURL("\(user.htmlUrl)?tab=repositories")
-            } label: {
-                Text("Check GitHub Repository")
-                    .frame(maxWidth: .infinity)
-                    .padding()
-                    .background(Color.blue)
-                    .foregroundColor(.white)
-                    .cornerRadius(10)
-            }
-            .buttonStyle(PlainButtonStyle())
-        }
-        .padding()
-        .background(Color.accentColor.opacity(0.05))
-        .cornerRadius(15)
-        .shadow(color: Color.black.opacity(0.1), radius: 10, x: 0, y: 5)
-    }
-    
-    private func statView(title: String, count: Int) -> some View {
-        VStack(alignment: .leading) {
-            Text(title)
-                .font(.caption)
-                .foregroundColor(.secondary)
-            Text("\(count)")
-                .foregroundColor(.primary)
-                .font(.title3)
-                .fontWeight(.bold)
-        }
-    }
-}
+//struct RepositoryStatsView: View {
+//    let user: User
+//    
+//    var body: some View {
+//
+//    }
+//    
+//    private func statView(title: String, count: Int) -> some View {
+//        VStack(alignment: .leading) {
+//            Text(title)
+//                .font(.caption)
+//                .foregroundColor(.secondary)
+//            Text("\(count)")
+//                .foregroundColor(.primary)
+//                .font(.title3)
+//                .fontWeight(.bold)
+//        }
+//    }
+//}
 
 struct AlertItem: Identifiable {
     let id = UUID()

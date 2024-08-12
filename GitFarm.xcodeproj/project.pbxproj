@@ -60,7 +60,6 @@
 		BF6CFB0C2C5CAF8500EE06C4 /* Repository.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF6CFB0B2C5CAF8500EE06C4 /* Repository.swift */; };
 		BF6CFB0D2C5CAFD900EE06C4 /* Repository.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF6CFB0B2C5CAF8500EE06C4 /* Repository.swift */; };
 		BF6CFB0E2C5CBDED00EE06C4 /* FollowerListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFE0824E2C5A568600FA1FE0 /* FollowerListViewModel.swift */; };
-		BF6CFB0F2C5CBDF100EE06C4 /* FollowerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8B57242C5BC830009FE90F /* FollowerViewModel.swift */; };
 		BF6CFB112C5CC57500EE06C4 /* CommitStatisticsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF6CFB102C5CC57500EE06C4 /* CommitStatisticsView.swift */; };
 		BF6CFB132C5E123900EE06C4 /* PersistanceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF6CFB122C5E123900EE06C4 /* PersistanceManager.swift */; };
 		BF6CFB152C5E21A500EE06C4 /* UserDataViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF6CFB142C5E21A500EE06C4 /* UserDataViewModel.swift */; };
@@ -72,7 +71,6 @@
 		BF862D4B2C630950007A1DA6 /* FollowerCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF862D4A2C630950007A1DA6 /* FollowerCell.swift */; };
 		BF862D4E2C631D0B007A1DA6 /* HowToUseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF862D4D2C631D0B007A1DA6 /* HowToUseView.swift */; };
 		BF8B57232C5BA708009FE90F /* FollowerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8B57222C5BA708009FE90F /* FollowerView.swift */; };
-		BF8B57252C5BC830009FE90F /* FollowerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF8B57242C5BC830009FE90F /* FollowerViewModel.swift */; };
 		BFC563052C529ABA00CE79CB /* GitFarmApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFC563042C529ABA00CE79CB /* GitFarmApp.swift */; };
 		BFC563072C529ABA00CE79CB /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFC563062C529ABA00CE79CB /* Persistence.swift */; };
 		BFC5630A2C529ABA00CE79CB /* GitFarm.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = BFC563082C529ABA00CE79CB /* GitFarm.xcdatamodeld */; };
@@ -179,7 +177,6 @@
 		BF862D4A2C630950007A1DA6 /* FollowerCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowerCell.swift; sourceTree = "<group>"; };
 		BF862D4D2C631D0B007A1DA6 /* HowToUseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HowToUseView.swift; sourceTree = "<group>"; };
 		BF8B57222C5BA708009FE90F /* FollowerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowerView.swift; sourceTree = "<group>"; };
-		BF8B57242C5BC830009FE90F /* FollowerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowerViewModel.swift; sourceTree = "<group>"; };
 		BFC563012C529ABA00CE79CB /* GitFarm.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GitFarm.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BFC563042C529ABA00CE79CB /* GitFarmApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitFarmApp.swift; sourceTree = "<group>"; };
 		BFC563062C529ABA00CE79CB /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
@@ -272,7 +269,6 @@
 			children = (
 				BF59EB6D2C53EEA000B3F51B /* CommitHistoryViewModel.swift */,
 				BF59EB852C53F5B700B3F51B /* AppInitViewModel.swift */,
-				BF8B57242C5BC830009FE90F /* FollowerViewModel.swift */,
 				BF6CFB142C5E21A500EE06C4 /* UserDataViewModel.swift */,
 				BF68BF512C56511200263F63 /* AppCoordinator.swift */,
 				BFE0824E2C5A568600FA1FE0 /* FollowerListViewModel.swift */,
@@ -626,7 +622,6 @@
 				BF5E274D2C58AA16009E31C4 /* GitCommitView.swift in Sources */,
 				BF5E27292C5892B8009E31C4 /* GitFarmWidgetBundle.swift in Sources */,
 				BF6CFB192C5E266D00EE06C4 /* Sidebar.swift in Sources */,
-				BF6CFB0F2C5CBDF100EE06C4 /* FollowerViewModel.swift in Sources */,
 				BF6CFB1D2C5E26AE00EE06C4 /* SearchBar.swift in Sources */,
 				BF5E27462C58A6AD009E31C4 /* Config.swift in Sources */,
 				BF73417E2C65E9AD0051C09A /* URLImageView.swift in Sources */,
@@ -679,7 +674,6 @@
 				BF63842F2C5A165D0025FBA8 /* HeaderView.swift in Sources */,
 				BF68BF542C56519200263F63 /* LoadingView.swift in Sources */,
 				BF0900FB2C52AB4F00F18975 /* LoginManager.swift in Sources */,
-				BF8B57252C5BC830009FE90F /* FollowerViewModel.swift in Sources */,
 				BFE082482C5A41DD00FA1FE0 /* ChartView.swift in Sources */,
 				BF68BF4E2C56345D00263F63 /* Config.swift in Sources */,
 				BF8B57232C5BA708009FE90F /* FollowerView.swift in Sources */,
@@ -867,7 +861,7 @@
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				SUPPORTED_PLATFORMS = macosx;
+				SUPPORTED_PLATFORMS = "xrsimulator xros watchsimulator watchos macosx iphonesimulator iphoneos driverkit appletvsimulator appletvos";
 				SUPPORTS_MACCATALYST = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -927,7 +921,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = NO;
-				SUPPORTED_PLATFORMS = macosx;
+				SUPPORTED_PLATFORMS = "xrsimulator xros watchsimulator watchos macosx iphonesimulator iphoneos driverkit appletvsimulator appletvos";
 				SUPPORTS_MACCATALYST = YES;
 				SWIFT_COMPILATION_MODE = wholemodule;
 			};
@@ -969,6 +963,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1011,6 +1006,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

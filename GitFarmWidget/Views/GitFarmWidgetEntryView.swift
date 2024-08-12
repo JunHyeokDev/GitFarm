@@ -92,7 +92,6 @@ struct GitFarmWidgetEntryView : View {
             }
             .buttonStyle(.plain) // 버튼이 사라지는 마법!!
             .position(x: geometry.size.width / 2, y: 9)
-            
             Spacer()
         }
     }
