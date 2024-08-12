@@ -101,14 +101,14 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate {
         if let window = NSApplication.shared.windows.first {
             window.delegate = self
             window.styleMask.remove(.resizable)
-            window.setContentSize(NSSize(width: 1000, height: 650))
-            window.minSize = NSSize(width: 1000, height: 650)
-            window.maxSize = NSSize(width: 1000, height: 650)
+            window.setContentSize(NSSize(width: 1000, height: 800))
+            window.minSize = NSSize(width: 1000, height: 800)
+            window.maxSize = NSSize(width: 1000, height: 800)
         }
     }
     
     func windowWillResize(_ sender: NSWindow, to frameSize: NSSize) -> NSSize {
-        return NSSize(width: 1000, height: 650)
+        return NSSize(width: 1000, height: 800)
     }
 }
 #endif

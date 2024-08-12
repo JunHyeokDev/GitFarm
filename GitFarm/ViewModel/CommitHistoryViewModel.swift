@@ -99,37 +99,8 @@ class CommitHistoryViewModel: ObservableObject {
             }
             result.append(filledWeek)
         }
-//
         return result
     }
-    
-//    func fetchCommitHistories(with username: String) {
-//        UserDefaults.standard.set(username, forKey: "username")
-//        NetworkManager.shared.fetchCommitHistories(with: username)
-//            .receive(on: DispatchQueue.main)
-//            .sink(
-//                receiveCompletion: { completion in
-//                    switch completion {
-//                    case .finished:
-//                        print("fetchCommitHistories Successfully finished")
-//                    case .failure:
-//                        print("fetchCommitHistories fail..!")
-//                    }
-//                },
-//                receiveValue: { [weak self] commitHistories in
-//
-//                    self?.commitHistories = commitHistories
-//                    self?.configureVM(with: commitHistories)
-//                    self?.saveCommitHistoriesToUserDefaults(with: commitHistories)
-//                    // 디버깅을 위한 출력
-////                    print("Total commit histories: \(commitHistories.count)")
-////                    for (index, commit) in commitHistories.enumerated() {
-////                        print("Index: \(index), Date: \(commit.date), Count: \(commit.count)")
-////                    }
-//                }
-//            )
-//            .store(in: &cancellables)
-//    }
     
     func fetchCommitHistories(with username: String) async {
         do {
