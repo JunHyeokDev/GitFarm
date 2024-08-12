@@ -24,26 +24,33 @@ struct FollowerListView: View {
     }
     
     var body: some View {
-        VStack {
-            SearchBar(text: $searchText)
-                .padding(.top)
-            
-            ScrollView {
-                LazyVGrid(columns: [GridItem(.adaptive(minimum: 100))], spacing: 20) {
-                    ForEach(filteredFollowers, id: \.id) { follower in
-                        FollowerCell(follower: follower)
-                            .transition(.scale.combined(with: .opacity))
-                            .onTapGesture {
-                                selectedFollower = follower
+        ZStack {
+            VStack {
+                SearchBar(text: $searchText)
+                    .padding(.top)
+                
+                if !viewModel.isLoading {
+                    ScrollView {
+                        LazyVGrid(columns: [GridItem(.adaptive(minimum: 100))], spacing: 20) {
+                            ForEach(filteredFollowers, id: \.id) { follower in
+                                FollowerCell(follower: follower)
+                                    .transition(.scale.combined(with: .opacity))
+                                    .onTapGesture {
+                                        selectedFollower = follower
+                                    }
                             }
+                        }
+                        .padding()
                     }
                 }
-                .padding()
             }
             
             if viewModel.isLoading {
+                Color.black.opacity(0.3)
+                    .edgesIgnoringSafeArea(.all)
                 ProgressView()
-                    .frame(width: 50, height: 50)
+                    .scaleEffect(1.5)
+                    .progressViewStyle(CircularProgressViewStyle(tint: .white))
             }
         }
         .navigationTitle("Followers")
@@ -53,13 +60,20 @@ struct FollowerListView: View {
         .animation(.spring(), value: filteredFollowers)
         .sheet(item: $selectedFollower) { follower in
             FollowerView(username: follower.login ?? "")
-            #if os(macOS)
-                .frame(width: 400, height: 600)
-                .background( LinearGradient(
-                    gradient: Gradient(colors: [Color.mint.opacity(0.3), Color.blue.opacity(0.3)]),
-                    startPoint: .top,
-                    endPoint: .bottom ) )
-            #endif
+//                .frame(maxWidth: .infinity, maxHeight: .infinity)
+//                .background(LinearGradient(
+//                    gradient: Gradient(colors: [Color.mint.opacity(0.3), Color.blue.opacity(0.3)]),
+//                    startPoint: .top,
+//                    endPoint: .bottom
+//                ))
+//                .presentationDetents([.height(600)])
+#if os(macOS)
+    .frame(width: 400, height: 800)
+    .background( LinearGradient(
+        gradient: Gradient(colors: [Color.mint.opacity(0.3), Color.blue.opacity(0.3)]),
+        startPoint: .top,
+        endPoint: .bottom ) )
+#endif
         }
     }
 }
