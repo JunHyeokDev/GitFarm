@@ -3,7 +3,7 @@
 //  GitFarmWidgetExtension
 //
 //  Created by Jun Hyeok Kim on 7/30/24.
-//
+// 1su!tcasE9
 
 import SwiftUI
 import WidgetKit
@@ -23,9 +23,28 @@ struct GitFarmWidgetEntryView : View {
                     Text("No data available")
                 }
                 
-                refreshButton(geometry: geometry)
+                VStack {
+                    refreshButton(geometry: geometry)
+                    Spacer()
+                }
             }
         }
+    }
+    
+    private func refreshButton(geometry: GeometryProxy) -> some View {
+        Button(intent: ConfigurationAppIntent()) {
+            HStack {
+                Image(systemName: "arrow.clockwise")
+                Text("왜안되씨펄련아")
+            }
+            .padding(10)
+            .background(Color.blue.opacity(0.1))
+            .cornerRadius(10)
+        }
+        .buttonStyle(PlainButtonStyle())
+        .frame(maxWidth: .infinity)
+        .frame(height: geometry.size.height * 0.2)
+        .contentShape(Rectangle())
     }
     
     private var loadingView: some View {
@@ -84,15 +103,17 @@ struct GitFarmWidgetEntryView : View {
         }
     }
     
-    private func refreshButton(geometry: GeometryProxy) -> some View {
-        VStack {
-            Button(intent: RefreshWidgetIntent()) {
-                Color.clear
-                    .frame(width: 60, height: 40)
-            }
-            .buttonStyle(.plain) // 버튼이 사라지는 마법!!
-            .position(x: geometry.size.width / 2, y: 9)
-            Spacer()
-        }
-    }
+//    private func refreshButton(geometry: GeometryProxy) -> some View {
+//        VStack {
+//            Button(intent: RefreshWidgetIntent()) {
+//                Image(systemName: "arrow.clockwise")
+//                    .foregroundColor(.gray.opacity(0.5))
+//                    .frame(width: 44, height: 44) // Increased touch area
+//            }
+//            .buttonStyle(PlainButtonStyle())
+//            .frame(maxWidth: .infinity, alignment: .center) // Center the button
+//            .contentShape(Rectangle()) // Ensure the entire area is tappable
+//            Spacer()
+//        }
+//    }
 }
