@@ -9,6 +9,7 @@ import WidgetKit
 import SwiftUI
 
 struct Provider: AppIntentTimelineProvider {
+    
     func placeholder(in context: Context) -> GitFarmEntry {
         GitFarmEntry.loading()
     }

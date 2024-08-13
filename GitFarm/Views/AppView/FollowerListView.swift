@@ -24,8 +24,8 @@ struct FollowerListView: View {
     }
     
     var body: some View {
-        ZStack {
-            VStack {
+        HStack(alignment: .top) {
+            VStack  {
                 SearchBar(text: $searchText)
                     .padding(.top)
                 
@@ -33,47 +33,42 @@ struct FollowerListView: View {
                     ScrollView {
                         LazyVGrid(columns: [GridItem(.adaptive(minimum: 100))], spacing: 20) {
                             ForEach(filteredFollowers, id: \.id) { follower in
-                                FollowerCell(follower: follower)
-                                    .transition(.scale.combined(with: .opacity))
-                                    .onTapGesture {
-                                        selectedFollower = follower
-                                    }
+                                NavigationLink(destination: FollowerView(username: follower.login ?? "")) { // NavigationLink 추가
+                                    FollowerCell(follower: follower)
+                                        .background(Color.clear) // 셀 배경을 투명하게 설정
+                                }
+                                .buttonStyle(PlainButtonStyle()) // NavigationLink의 기본 스타일 제거
+                                .transition(.scale.combined(with: .opacity))
                             }
+                            .padding()
                         }
-                        .padding()
                     }
                 }
+                
+                if viewModel.isLoading {
+                    ProgressView()
+                        .scaleEffect(1.5)
+                        .progressViewStyle(CircularProgressViewStyle(tint: .white))
+                }
             }
-            
-            if viewModel.isLoading {
-                Color.black.opacity(0.3)
-                    .edgesIgnoringSafeArea(.all)
-                ProgressView()
-                    .scaleEffect(1.5)
-                    .progressViewStyle(CircularProgressViewStyle(tint: .white))
+            .navigationTitle("Followers")
+            .onAppear {
+                viewModel.fetchFollowers(for: commitHistoryViewModel.user?.login ?? "")
             }
-        }
-        .navigationTitle("Followers")
-        .onAppear {
-            viewModel.fetchFollowers(for: commitHistoryViewModel.user?.login ?? "")
-        }
-        .animation(.spring(), value: filteredFollowers)
-        .sheet(item: $selectedFollower) { follower in
-            FollowerView(username: follower.login ?? "")
-//                .frame(maxWidth: .infinity, maxHeight: .infinity)
-//                .background(LinearGradient(
-//                    gradient: Gradient(colors: [Color.mint.opacity(0.3), Color.blue.opacity(0.3)]),
-//                    startPoint: .top,
-//                    endPoint: .bottom
-//                ))
-//                .presentationDetents([.height(600)])
-#if os(macOS)
-    .frame(width: 400, height: 800)
-    .background( LinearGradient(
-        gradient: Gradient(colors: [Color.mint.opacity(0.3), Color.blue.opacity(0.3)]),
-        startPoint: .top,
-        endPoint: .bottom ) )
-#endif
+            .animation(.spring(), value: filteredFollowers)
+            //        .sheet(item: $selectedFollower) { follower in
+            //            FollowerView(username: follower.login ?? "")
+            //                .padding()
+            //            #if os(macOS)
+            //                .frame(width: 400, height: 650)
+            //                            .background(LinearGradient(
+            //                                gradient: Gradient(colors: [Color.mint.opacity(0.3), Color.blue.opacity(0.3)]),
+            //                                startPoint: .top,
+            //                                endPoint: .bottom
+            //                            ))
+            //                            .presentationDetents([.medium,.large,.fraction(0.75)])
+            //            #endif
+            //        }
         }
     }
 }
