@@ -23,7 +23,7 @@ struct DetailView: View {
             VStack(alignment: .leading) {
                 switch selection {
                 case .myFarm:
-                    EntryView(commitHistoryViewModel: commitHistoryViewModel, userDataViewModel: userDataViewModel)
+                    EntryView()
                         .frame(maxWidth: 400, maxHeight: 400)
                 case .chart:
                     ChartView(viewModel: commitHistoryViewModel)

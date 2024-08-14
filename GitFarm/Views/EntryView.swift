@@ -9,27 +9,33 @@ import SwiftUI
 import AVFoundation
 
 struct EntryView: View {
-    @ObservedObject var commitHistoryViewModel: CommitHistoryViewModel
-    @ObservedObject var userDataViewModel: UserDataViewModel
-    @EnvironmentObject var appCoordinator : AppCoordinator
+    @EnvironmentObject var appCoordinator: AppCoordinator
     @Environment(\.colorScheme) var colorScheme
     
     @State private var isRefreshing = false
-    
+
     var body: some View {
         VStack(alignment: .center, spacing: 20) {
             Text("Welcome to GitFarm! 👩🏻‍🌾")
                 .foregroundStyle(Color.accent)
                 .font(.system(size: 24, weight: .bold))
             
-            VStack(alignment: .center) {
-                GitCommitHistoryView(commitHistories: commitHistoryViewModel.commitHistories, user: commitHistoryViewModel.user, columns: 17, commitTimeStatistics: userDataViewModel.commitStats ?? CommitTimeStatistics.defaultsInfo())
-                    .padding(.all, 10)
-                    .background(colorScheme == .dark ? Color.secondary.opacity(0.3) : Color.secondary.opacity(0.1))
-                    .clipShape(RoundedRectangle(cornerRadius: 20))
+            if let commitHistoryViewModel = appCoordinator.commitHistoryViewModel,
+               let userDataViewModel = appCoordinator.userDataViewModel {
+                VStack(alignment: .center) {
+                    GitCommitHistoryView(commitHistories: commitHistoryViewModel.commitHistories,
+                                         user: commitHistoryViewModel.user,
+                                         columns: 17,
+                                         commitTimeStatistics: userDataViewModel.commitStats ?? CommitTimeStatistics.defaultsInfo())
+                        .padding(.all, 10)
+                        .background(colorScheme == .dark ? Color.secondary.opacity(0.3) : Color.secondary.opacity(0.1))
+                        .clipShape(RoundedRectangle(cornerRadius: 20))
+                }
+                .frame(height: 340)
+                .padding(.horizontal, 10)
+            } else {
+                Text("Loading data...")
             }
-            .frame(height: 340)
-            .padding(.horizontal, 10)
         
             Spacer(minLength: 20)
         
