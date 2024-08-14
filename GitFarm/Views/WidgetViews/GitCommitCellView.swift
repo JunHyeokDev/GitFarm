@@ -21,7 +21,7 @@ struct GitCommitCellView : View {
                 .resizable()
                 .frame(width: imagewidth,height: imageheight)
         }
-        else if commitHistory.count == 1 || commitHistory.count == 2 {
+        else if commitHistory.count <= 5 {
             Image("sprout")
                 .resizable()
                 .frame(width: imagewidth,height: imageheight)

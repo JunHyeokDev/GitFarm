@@ -61,6 +61,9 @@ class AppCoordinator: ObservableObject {
             await userDataVM.loadUserData(username: user.login)
             await commitHistoryVM.fetchCommitHistories(with: user.login)
             
+            self.userDataViewModel = userDataVM
+            self.commitHistoryViewModel = commitHistoryVM
+            
             guard let userDefaults = UserDefaults(suiteName: "group.com.Jun.GitFarm.FarmWidget") else {
                 throw NSError(domain: "AppCoordinator", code: 1, userInfo: [NSLocalizedDescriptionKey: "Failed to access shared UserDefaults"])
             }
