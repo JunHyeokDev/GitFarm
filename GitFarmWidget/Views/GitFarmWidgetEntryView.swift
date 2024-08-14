@@ -22,30 +22,25 @@ struct GitFarmWidgetEntryView : View {
                 } else {
                     Text("No data available")
                 }
-                
-                VStack {
-                    refreshButton(geometry: geometry)
-                    Spacer()
-                }
             }
         }
     }
     
-    private func refreshButton(geometry: GeometryProxy) -> some View {
-        Button(intent: ConfigurationAppIntent()) {
-            HStack {
-                Image(systemName: "arrow.clockwise")
-                Text("왜안되씨펄련아")
-            }
-            .padding(10)
-            .background(Color.blue.opacity(0.1))
-            .cornerRadius(10)
-        }
-        .buttonStyle(PlainButtonStyle())
-        .frame(maxWidth: .infinity)
-        .frame(height: geometry.size.height * 0.2)
-        .contentShape(Rectangle())
-    }
+//    private func refreshButton(geometry: GeometryProxy) -> some View {
+//        Button(intent: ConfigurationAppIntent()) {
+//            HStack {
+//                Image(systemName: "arrow.clockwise")
+//                Text("왜안되씨펄련아")
+//            }
+//            .padding(10)
+//            .background(Color.blue.opacity(0.1))
+//            .cornerRadius(10)
+//        }
+//        .buttonStyle(PlainButtonStyle())
+//        .frame(maxWidth: .infinity)
+//        .frame(height: geometry.size.height * 0.2)
+//        .contentShape(Rectangle())
+//    }
     
     private var loadingView: some View {
         VStack {
