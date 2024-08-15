@@ -35,6 +35,7 @@ Download `Git Farm` today and turn your Home Screen into a personalized commit f
 
 # Note
 - Note: Git Farm requires a GitHub account to access your commit history and repository data.
+<img src="https://github.com/user-attachments/assets/5fa53a9a-431f-443a-8374-aa6417537ea2" alt="Git Farm Screenshot" width="250">
 
 ## How to contact
 
