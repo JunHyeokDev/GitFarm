@@ -41,6 +41,6 @@ Download `Git Farm` today and turn your Home Screen into a personalized commit f
 | Platform | Info |
 |---|---|
 | Email | fixme1537@gmail.com |
-| Instagram | JunHyeok_kim |
+| Instagram | 뭐였더라... |
 
 Let's grow your coding garden together. 🌱
